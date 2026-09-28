@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【16天】西班牙朝聖之路 × 高第建築 × 世界盡頭 × 馬德里</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --ink:#16406e; --ink-2:#0d2947;
+    --paper:#f7f4ea; --paper-2:#ece6d3;
+    --maple:#8e2f4a; --maple-2:#6f2239;
+    --gold:#dda512;
+    --pine:#2f7a55; --pine-2:#225a3f;
+    --slate:#2a708c; --slate-2:#1d5269;
+    --text:#2a241d; --text-soft:#5c5348;
+    --line:#d8d0b9;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--text); font-family:'Noto Sans TC', sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Noto Serif TC', serif; margin:0;}
+  .mono{font-family:'Space Mono', monospace;}
+
+  /* NAV */
+  .topnav{position:sticky; top:0; z-index:100; background:rgba(13,41,71,.96); backdrop-filter:blur(8px); border-bottom:1px solid rgba(221,165,18,.3); display:flex; align-items:center; gap:0; overflow-x:auto; padding:0 16px;}
+  .topnav a{font-family:'Space Mono', monospace; font-size:11.5px; color:#a3bdd4; text-decoration:none; padding:12px 14px; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s, border-color .2s;}
+  .topnav a:hover{color:#f2c94c; border-bottom-color:#dda512;}
+
+  /* HERO */
+  .hero{position:relative; background:linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 65%, #1c5a8c 100%); color:var(--paper); padding:64px 24px 40px; overflow:hidden; text-align:center;}
+  .stars{position:absolute; inset:0; overflow:hidden;}
+  .star{position:absolute; width:2px; height:2px; background:#fff; border-radius:50%; opacity:.7; animation:twinkle 3.4s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15;} 50%{opacity:.95;}}
+  .leaf{position:absolute; top:-30px; font-size:20px; opacity:.85; animation:fall linear infinite; z-index:1;}
+  @keyframes fall{0%{transform:translateY(-10%) rotate(0deg); opacity:.9;} 100%{transform:translateY(560px) rotate(340deg); opacity:0;}}
+  .eyebrow{font-family:'Space Mono', monospace; letter-spacing:.24em; font-size:12px; color:#f2c94c; text-transform:uppercase; margin-bottom:16px; position:relative;}
+  .hero h1{font-size:clamp(23px, 5vw, 38px); font-weight:900; line-height:1.4; text-shadow:0 2px 18px rgba(0,0,0,.35); position:relative;}
+  .hero p.sub{margin-top:14px; font-size:14.5px; color:#cfdeeb; position:relative;}
+  .hero .route-caption{margin-top:20px; font-size:12px; color:#a3bdd4; font-family:'Space Mono', monospace; line-height:1.9; max-width:600px; margin-left:auto; margin-right:auto; position:relative;}
+
+  .mapbox{position:relative; max-width:900px; margin:28px auto 0; border:1px solid rgba(242,201,76,.35); border-radius:8px; overflow:hidden; box-shadow:0 14px 40px rgba(0,0,0,.35);}
+  .mapbox iframe{display:block; width:100%; height:380px; border:0;}
+  .mapbox .maplink{position:absolute; right:10px; bottom:10px; background:rgba(13,41,71,.88); color:#f2c94c; font-family:'Space Mono', monospace; font-size:11.5px; padding:6px 12px; border-radius:18px; text-decoration:none; border:1px solid rgba(242,201,76,.4);}
+
+  .flights{display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:900px; margin:18px auto 8px; position:relative;}
+  .flight{background:rgba(255,255,255,.06); border:1px solid rgba(242,201,76,.28); border-radius:8px; padding:16px 18px; text-align:left; backdrop-filter:blur(2px);}
+  .flight .fl-head{display:flex; justify-content:space-between; align-items:baseline; font-family:'Space Mono', monospace;}
+  .flight .fl-no{font-size:15px; font-weight:700; color:#f2c94c;}
+  .flight .fl-date{font-size:11.5px; color:#a3bdd4;}
+  .flight .fl-route{display:flex; align-items:center; gap:10px; margin-top:12px;}
+  .flight .apt{flex:1;}
+  .flight .apt .code{font-family:'Noto Serif TC', serif; font-weight:900; font-size:22px; color:var(--paper); line-height:1.2;}
+  .flight .apt .time{font-family:'Space Mono', monospace; font-size:14px; color:#f2c94c; margin-top:2px;}
+  .flight .apt .term{font-size:11px; color:#a3bdd4; margin-top:2px;}
+  .flight .apt.arr{text-align:right;}
+  .flight .fl-line{flex:1.1; position:relative; height:2px; background:repeating-linear-gradient(90deg,#dda512 0,#dda512 5px,transparent 5px,transparent 10px); min-width:60px;}
+  .flight .fl-line::after{content:"✈"; position:absolute; top:-11px; left:50%; transform:translateX(-50%); color:#f2c94c; font-size:14px;}
+  .flight .fl-meta{margin-top:10px; font-size:11.5px; color:#a3bdd4; font-family:'Space Mono', monospace;}
+
+  /* WRAP */
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+
+  /* TICKET ALERT */
+  .ticket-alert{background:#fff; border:2px solid var(--maple); border-radius:8px; padding:22px 24px 20px; margin:40px auto 20px; position:relative; box-shadow:0 10px 30px rgba(111,34,57,.15); font-size:14.5px; line-height:1.9;}
+  .ticket-alert::before{content:"⚠ 機票與門票・最重要提醒"; position:absolute; top:-14px; left:20px; background:var(--maple); color:#fff; font-family:'Noto Serif TC', serif; font-weight:700; font-size:13px; letter-spacing:.08em; padding:4px 14px; border-radius:3px;}
+  .ticket-alert .big-date{font-family:'Space Mono', monospace; background:var(--paper-2); border:1px dashed var(--gold); border-radius:6px; padding:12px 16px; margin:12px 0; font-size:14px;}
+  .ticket-alert .big-date b{color:var(--maple-2); font-size:16px;}
+  .ticket-alert a{color:var(--slate); font-weight:700;}
+  .ticket-alert ul{margin:8px 0 0; padding-left:20px;}
+  .ticket-alert li{margin-bottom:6px;}
+  .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .btn{display:inline-block; font-family:'Space Mono', monospace; font-size:12.5px; padding:9px 16px; border-radius:22px; text-decoration:none; border:1.5px solid var(--maple); color:#fff; background:var(--maple);}
+  .btn.ghost{background:transparent; color:var(--maple-2);}
+  .btn.pine{background:var(--pine); border-color:var(--pine); color:#fff;}
+  .btn.slate{background:var(--slate); border-color:var(--slate); color:#fff;}
+
+  .notice{background:var(--paper-2); border:1px solid var(--line); border-radius:2px; padding:18px 22px; margin:20px auto 30px; position:relative; font-size:14px; line-height:1.85;}
+  .notice::before{content:"行李與交通"; position:absolute; top:-13px; left:22px; background:var(--pine); color:#fff; font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.1em; padding:4px 10px; border-radius:2px;}
+  .notice b{color:var(--pine-2);}
+
+  /* CHECKLIST */
+  .checklist-wrap{background:#fff; border:1px solid var(--line); border-radius:8px; padding:24px 26px; margin:0 auto 30px; box-shadow:0 4px 18px rgba(22,64,110,.06);}
+  .checklist-wrap h3{font-size:16px; color:var(--ink); margin-bottom:16px; display:flex; align-items:center; gap:8px;}
+  .cl-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .cl-block h4{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.12em; color:var(--text-soft); margin:0 0 10px; text-transform:uppercase;}
+  .cl-item{display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; font-size:13.5px; line-height:1.6;}
+  .cl-item input[type=checkbox]{margin-top:3px; accent-color:var(--pine); flex-shrink:0; width:15px; height:15px;}
+  .cl-item label{cursor:pointer;}
+  .cl-item.urgent label{color:var(--maple-2); font-weight:700;}
+  .cl-item a{color:var(--slate);}
+
+  /* WEATHER */
+  .weather-wrap{background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin:0 auto 30px; box-shadow:0 4px 18px rgba(22,64,110,.06);}
+  .weather-wrap h3{font-size:16px; color:var(--ink); margin-bottom:14px;}
+  .weather-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .weather-table th{font-family:'Space Mono', monospace; font-size:11px; text-align:left; color:var(--text-soft); padding:6px 10px; border-bottom:2px solid var(--line);}
+  .weather-table td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  .weather-table tr:last-child td{border-bottom:none;}
+  .weather-table .loc{font-weight:700; color:var(--ink);}
+  .weather-table .day-temp{color:var(--maple-2); font-family:'Space Mono', monospace; font-weight:700;}
+  .weather-table .night-temp{color:var(--slate); font-family:'Space Mono', monospace;}
+  .weather-table .tip{font-size:12px; color:var(--text-soft);}
+  .temp-bar{display:inline-block; height:6px; border-radius:3px; background:linear-gradient(90deg,var(--slate),var(--maple)); vertical-align:middle; margin-left:6px; opacity:.6;}
+
+  /* PACKING */
+  .pack-wrap{background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin:0 auto 40px; box-shadow:0 4px 18px rgba(22,64,110,.06);}
+  .pack-wrap h3{font-size:16px; color:var(--ink); margin-bottom:16px;}
+  .pack-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .pack-block h4{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.12em; color:var(--text-soft); margin:0 0 10px; text-transform:uppercase;}
+  .pack-item{display:flex; align-items:flex-start; gap:8px; margin-bottom:7px; font-size:13.5px; line-height:1.5;}
+  .pack-item input[type=checkbox]{margin-top:3px; accent-color:var(--pine); flex-shrink:0; width:14px; height:14px;}
+  .pack-item label{cursor:pointer;}
+  .pack-item.key label{color:var(--maple-2); font-weight:700;}
+
+  /* CHAPTER / TIMELINE */
+  .chapter{display:flex; align-items:center; gap:12px; margin:38px 0 14px; color:var(--text-soft);}
+  .chapter .num{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.15em; background:var(--ink); color:var(--paper); padding:3px 9px; border-radius:2px;}
+  .chapter .ln{flex:1; height:1px; background:var(--line);}
+  .chapter .lbl{font-family:'Noto Serif TC', serif; font-weight:700; font-size:14px; color:var(--text);}
+  .timeline{position:relative; padding:0 0 30px;}
+  .rail{position:absolute; left:29px; top:6px; height:calc(100% - 36px); width:2px; background:repeating-linear-gradient(180deg, var(--gold) 0, var(--gold) 6px, transparent 6px, transparent 12px);}
+  .day{position:relative; padding-left:70px; margin-bottom:26px;}
+  .marker{position:absolute; left:0; top:2px; width:60px; height:60px; border-radius:50%; background:var(--paper); border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; flex-direction:column;}
+  .marker .d{font-family:'Space Mono', monospace; font-size:10px; color:var(--text-soft); letter-spacing:.05em;}
+  .marker svg{width:22px; height:22px; margin-top:1px;}
+  .card{background:#fff; border-radius:6px; border:1px solid var(--line); box-shadow:0 3px 14px rgba(22,64,110,.06); overflow:hidden;}
+  .card-head{padding:16px 20px 14px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; border-bottom:1px dashed var(--line);}
+  .card-head h2{font-size:16.5px; line-height:1.5; color:var(--ink);}
+  .stay-tag{font-family:'Space Mono', monospace; font-size:11.5px; white-space:nowrap; background:var(--paper-2); color:var(--pine-2); border:1px solid var(--line); padding:4px 9px; border-radius:20px;}
+  .stay-tag a{color:inherit; text-decoration:underline;}
+  .card-body{padding:16px 20px 18px;}
+  .row{display:flex; gap:14px; font-size:14px; line-height:1.8; margin-bottom:10px;}
+  .row:last-child{margin-bottom:0;}
+  .row .label{flex:0 0 64px; font-size:12px; font-family:'Space Mono', monospace; color:#9c8f78; padding-top:2px;}
+  .row .val{flex:1; color:var(--text);}
+  .hl{color:var(--maple-2); font-weight:700;}
+
+  details.more{margin-top:12px; border-top:1px dashed var(--line); padding-top:2px;}
+  details.more summary{cursor:pointer; list-style:none; font-family:'Space Mono', monospace; font-size:12px; color:var(--slate); padding:10px 0 4px; user-select:none; display:flex; align-items:center; gap:8px;}
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{content:"▸"; transition:transform .2s; color:var(--gold);}
+  details.more[open] summary::before{transform:rotate(90deg);}
+  details.more .inner{padding:8px 2px 6px; font-size:13.5px; line-height:1.9; color:var(--text);}
+  .opts{display:flex; flex-direction:column; gap:8px; margin-top:4px;}
+  .opt{border:1px dashed var(--line); border-radius:4px; padding:8px 12px; font-size:13.5px; background:var(--paper-2);}
+  .opt b{color:var(--ink);}
+  .opt a{color:var(--slate);}
+
+  /* BUS TIMETABLE */
+  .bus-box{background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:14px 14px 10px; margin:10px 0;}
+  .bus-box .bus-title{font-family:'Space Mono', monospace; font-size:11px; color:var(--text-soft); letter-spacing:.08em; margin-bottom:8px;}
+  .bus-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  .bus-table th{font-family:'Space Mono', monospace; font-size:10.5px; color:var(--text-soft); text-align:center; padding:4px 6px; border-bottom:1px solid var(--line); background:rgba(255,255,255,.5);}
+  .bus-table td{text-align:center; padding:5px 6px; border-bottom:1px solid rgba(216,208,185,.4); font-family:'Space Mono', monospace; font-size:12px;}
+  .bus-table td.rec{color:var(--maple-2); font-weight:700;}
+  .bus-table tr:last-child td{border-bottom:none;}
+  .bus-note{font-size:11.5px; color:var(--text-soft); margin-top:6px;}
+
+  /* RELAY */
+  .relay{background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:16px 16px 10px; margin:12px 0 6px;}
+  .relay .rl-title{font-family:'Space Mono', monospace; font-size:11px; color:var(--text-soft); letter-spacing:.08em; margin-bottom:10px;}
+  .rl-item{display:flex; align-items:flex-start; gap:12px; position:relative; padding-bottom:18px;}
+  .rl-item:last-child{padding-bottom:0;}
+  .rl-item::before{content:""; position:absolute; left:17px; top:38px; bottom:-2px; width:2px; background:repeating-linear-gradient(180deg,var(--gold) 0,var(--gold) 4px,transparent 4px,transparent 8px);}
+  .rl-item:last-child::before{display:none;}
+  .rl-icon{flex:0 0 36px; width:36px; height:36px; border-radius:50%; background:#fff; border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center;}
+  .rl-icon svg{width:18px; height:18px; stroke:var(--ink);}
+  .rl-icon.peak{background:var(--ink); border-color:var(--ink);}
+  .rl-icon.peak svg{stroke:var(--paper);}
+  .rl-body{flex:1; padding-top:3px;}
+  .rl-mode{font-size:13px; font-weight:700; color:var(--ink);}
+  .rl-time{font-family:'Space Mono', monospace; font-size:11.5px; color:var(--maple-2);}
+  .rl-note{font-size:12px; color:var(--text-soft); margin-top:2px;}
+
+  .sched{width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:13px;}
+  .sched td{padding:5px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .sched td:first-child{font-family:'Space Mono', monospace; color:var(--maple-2); font-weight:700; width:58px; white-space:nowrap;}
+  .sched tr:last-child td{border-bottom:none;}
+
+  .seg{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:8px 0 4px;}
+  .seg .stop{font-size:12px; background:var(--paper-2); border:1px solid var(--line); border-radius:14px; padding:3px 10px; white-space:nowrap;}
+  .seg .stop.peak{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .seg .via{font-size:10.5px; color:var(--maple-2); font-family:'Space Mono', monospace; white-space:nowrap; display:flex; flex-direction:column; align-items:center; line-height:1.3;}
+  .seg .via::after{content:"→"; color:var(--gold); font-size:13px;}
+
+  .suica{display:inline-flex; align-items:center; gap:3px; font-family:'Space Mono', monospace; font-size:10.5px; padding:2px 7px; border-radius:10px; white-space:nowrap; vertical-align:middle; margin-left:4px;}
+  .suica.ok{background:#e8f4e8; color:#2c6e2c; border:1px solid #a8d4a8;}
+  .suica.ng{background:#fce8e8; color:#8f2020; border:1px solid #f0b8b8;}
+  .suica.cash{background:#fff8e6; color:#7a5a10; border:1px solid #e6cf85;}
+  .confirm-tag{font-family:'Space Mono', monospace; font-size:11px; background:#e6f0e8; color:var(--pine-2); border:1px solid #b9d4bf; padding:3px 8px; border-radius:20px;}
+  .day.nagoya .marker{border-color:var(--slate);}
+  .day.hike .marker{border-color:var(--pine);}
+  .day.rest .marker{border-color:#9aa6b2;}
+  .day.alpine .marker{background:var(--ink); border-color:var(--gold);}
+  .day.alpine .marker svg{stroke:var(--paper);}
+  .day.alpine .marker .d{color:#f0d27a;}
+  .day.city .marker{border-color:var(--gold);}
+  .day.toyama .marker{border-color:var(--maple);}
+  .day.home .marker{background:var(--ink); border-color:var(--gold);}
+  .day.home .marker svg{stroke:var(--paper);}
+  .day.home .marker .d{color:#f0d27a;}
+  .day.alpine .card-head{background:linear-gradient(90deg, #eef0dd, #fff);}
+  .day.toyama .stay-tag{background:#f6e4ec; color:var(--maple-2); border-color:#dcb3c4;}
+  .day.hike .stay-tag{background:#e9f0ea; color:var(--pine-2); border-color:#cddccf;}
+  .day.nagoya .stay-tag{background:#e9eff2; color:var(--slate-2); border-color:#c9d6dd;}
+
+  .add-item-row{display:flex; gap:6px; margin-top:8px; padding-top:8px; border-top:1px dashed var(--line);}
+  .add-input{flex:1; border:1px solid var(--line); border-radius:6px; padding:6px 10px; font-size:13px; font-family:'Noto Sans TC', sans-serif; background:var(--paper-2); color:var(--text); outline:none;}
+  .add-input:focus{border-color:var(--gold); background:#fff;}
+  .add-btn{flex:0 0 32px; height:32px; border:1.5px solid var(--pine); border-radius:6px; background:transparent; color:var(--pine-2); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; transition:background .15s;}
+  .add-btn:hover{background:var(--pine); color:#fff;}
+  .custom-list{min-height:0;}
+  .del-btn{background:none; border:none; color:#b58fa0; cursor:pointer; font-size:13px; padding:0 2px; margin-left:4px; opacity:.5; transition:opacity .15s; vertical-align:middle;}
+  .del-btn:hover{opacity:1; color:var(--maple);}
+
+  footer{text-align:center; padding:36px 20px 60px; color:var(--text-soft); font-size:12.5px; font-family:'Space Mono', monospace; letter-spacing:.04em; line-height:2;}
+  footer a{color:var(--slate); text-decoration:underline;}
+
+  @media (max-width:640px){
+    .flights{grid-template-columns:1fr;}
+    .mapbox iframe{height:280px;}
+    .marker{width:52px; height:52px;}
+    .rail{left:25px;}
+    .day{padding-left:62px;}
+    .cl-grid,.pack-grid{grid-template-columns:1fr;}
+  }
+
+  /* PLAN SWITCH */
+  .plan-switch{display:flex; gap:10px; margin:6px 0 12px;}
+  .plan-btn{flex:1; font-family:'Noto Serif TC', serif; font-weight:700; font-size:14.5px; padding:12px 10px; border-radius:8px; border:2px solid var(--ink); background:#fff; color:var(--ink); cursor:pointer; line-height:1.5; transition:all .15s;}
+  .plan-btn span{display:block; font-family:'Noto Sans TC', sans-serif; font-weight:400; font-size:11.5px; color:var(--text-soft); margin-top:3px;}
+  .plan-btn.active{background:var(--ink); color:#fff; box-shadow:0 6px 18px rgba(22,64,110,.3);}
+  .plan-btn.active span{color:#f2c94c;}
+  .plan-note{background:var(--paper-2); border:1px dashed var(--gold); border-radius:6px; padding:12px 16px; margin:0 0 18px; font-size:12.5px; line-height:1.9; color:var(--text);}
+  /* CAMINO MAP */
+  .camino-map{height:320px; border:1px solid var(--line); border-radius:8px; margin:0 0 6px; box-shadow:0 4px 18px rgba(22,64,110,.08); z-index:0;}
+  .camino-map .leaflet-popup-content{font-family:'Noto Sans TC', sans-serif; font-size:12.5px; line-height:1.7; margin:10px 14px;}
+  .camino-map .leaflet-popup-content b{font-family:'Noto Serif TC', serif; color:var(--ink);}
+  .map-note{font-size:11.5px; color:var(--text-soft); margin:0 0 16px; font-family:'Space Mono', monospace;}
+  @media (max-width:640px){ .camino-map{height:260px;} }
+  .tag-must{display:inline-block; background:var(--maple); color:#fff; font-size:11px; font-weight:700; padding:1px 7px; border-radius:4px; margin:0 3px; vertical-align:1px; font-family:'Noto Sans TC',sans-serif;}
+  .tag-opt{display:inline-block; border:1px solid var(--slate); color:var(--slate); font-size:11px; font-weight:700; padding:0 6px; border-radius:4px; margin:0 3px; vertical-align:1px; font-family:'Noto Sans TC',sans-serif;}
+  .tag-legend{font-size:12.5px; color:var(--text-soft); margin:-4px 0 14px; line-height:1.9;}
+</style>
+</head>
+<body>
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="#checklist">✅ 行前準備</a>
+  <a href="#ticket">🎟 機票門票</a>
+  <a href="#hotels">🏨 住宿</a>
+  <a href="#hoteltodo">📬 住宿待辦</a>
+  <a href="#luggage">🧳 行李方案</a>
+  <a href="#weather">🌡 天氣</a>
+  <a href="#packing">🎒 行李</a>
+  <a href="#ch1">CH.1 巴塞隆納</a>
+  <a href="#ch2">CH.2 朝聖之路</a>
+  <a href="#ch3">CH.3 世界盡頭</a>
+  <a href="#ch4">CH.4 馬德里</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars" id="stars"></div>
+  <span class="leaf" style="left:10%; animation-duration:9s;">🐚</span>
+  <span class="leaf" style="left:32%; animation-duration:11s; animation-delay:2s;">🌼</span>
+  <span class="leaf" style="left:58%; animation-duration:8s; animation-delay:1s;">🐚</span>
+  <span class="leaf" style="left:82%; animation-duration:12s; animation-delay:3.5s;">🌼</span>
+  <div class="eyebrow">2027/03/26 晚 — 04/11 · 十六天</div>
+  <h1>西班牙壯遊：高第建築 × 葡萄牙之路 115km × 世界盡頭 × 馬德里</h1>
+  <p class="sub">從地中海岸的高第奇想出發，飛向大西洋畔的加利西亞，徒步六天走進 Santiago 大教堂，再到世界盡頭看海，最後以馬德里的藝術殿堂收尾</p>
+  <p class="route-caption">台北 → 巴塞隆納(4晚) → 葡萄牙之路徒步115km(Tui→Santiago・6天) → Santiago(2晚) → Finisterre → 馬德里(2晚)+托雷多 → 台北</p>
+  <div class="mapbox">
+    <iframe src="https://www.google.com/maps/d/embed?mid=1a3Pn_ny7BHiCYXCks4i04wY6WDjBdc0&ll=40.9,-4.2&z=6" loading="lazy" title="西班牙行程 Google 地圖"></iframe>
+    <a class="maplink" href="https://www.google.com/maps/d/viewer?mid=1a3Pn_ny7BHiCYXCks4i04wY6WDjBdc0" target="_blank" rel="noopener">在 Google 地圖開啟 ↗</a>
+  </div>
+  <div class="flights">
+    <div class="flight">
+      <div class="fl-head"><span class="fl-no">EK367＋EK185 去程 · 已開票 ✅ QFADEW（航班經航空公司改動）</span><span class="fl-date">2027/03/26 (五)</span></div>
+      <div class="fl-route">
+        <div class="apt"><div class="code">TPE</div><div class="time">23:00</div><div class="term">桃園機場 T2 · 3/26(五)</div></div>
+        <div class="fl-line"></div>
+        <div class="apt arr"><div class="code">BCN</div><div class="time">12:50</div><div class="term">巴塞隆納 El Prat T1 · 3/27(六)</div></div>
+      </div>
+      <div class="fl-meta">杜拜 T3 轉機 3h20（04:55 抵／08:15 起飛）· 託運 30kg＋手提 7kg · 經濟 Flex · <b>20:30 前抵達桃園</b>（櫃台開放時間以新電子機票為準）</div>
+    </div>
+    <div class="flight">
+      <div class="fl-head"><span class="fl-no">EK144＋EK386 回程 · 已開票 ✅ QFADEW</span><span class="fl-date">2027/04/10 (六)</span></div>
+      <div class="fl-route">
+        <div class="apt"><div class="code">MAD</div><div class="time">22:10</div><div class="term">馬德里 Barajas T4 衛星廳</div></div>
+        <div class="fl-line"></div>
+        <div class="apt arr"><div class="code">TPE</div><div class="time">21:00<span style="font-size:11px;">+1</span></div><div class="term">桃園機場 T2 · 4/11(日)晚抵</div></div>
+      </div>
+      <div class="fl-meta">杜拜 T3 轉機 1h30（07:15/08:45）· 總程 16h50 · 託運 25kg＋手提 7kg · 經濟 Saver · 4/11 晚 21:00 落地，週一不用請假</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- CHECKLIST -->
+  <div id="checklist" style="height:1px; margin-top:36px;"></div>
+  <div class="checklist-wrap">
+    <h3>✅ 行前準備 Checklist</h3>
+    <div class="cl-grid">
+      <div class="cl-block">
+        <h4>🎟 預訂・購票</h4>
+        <div class="cl-item urgent"><input type="checkbox" id="c1"><label for="c1">🛫 <b>國際機票已開票 ✅</b>（2026/7/12 購入，<b>TWD 34,152／1 人</b>，訂位代號 <b>QFADEW</b>；朋友的機票另計）——把這格打勾！後續可上 Manage Booking 加 Skywards 會員號、預選座位</label></div>
+        <div class="cl-item urgent"><input type="checkbox" id="c2"><label for="c2">✈️ <b>西班牙國內段 ①</b>：<b>3/31（三）14:00 Vueling VY1270</b> 巴塞隆納→維哥（15:50 抵）✅ <b>已訂，訂位代號 SJNN9M</b>。FLY 方案每人 €80.99，兩人 €161.98（含 25kg 託運＋座位下小包 40×30×20）。座位 <b>5E、5F</b>。可隨時線上報到</label></div>
+        <div class="cl-item urgent"><input type="checkbox" id="c3"><label for="c3">🚄 <b>4/8 Santiago→馬德里：改搭火車</b>（AVE／Alvia 約 3 小時，抵 Chamartín）。在 <a href="https://www.renfe.com/es/en" target="_blank" rel="noopener">Renfe 官網</a> 或 App 買，外國卡刷不過可改用 <a href="https://www.thetrainline.com/" target="_blank" rel="noopener">Trainline</a>／<a href="https://www.omio.com/" target="_blank" rel="noopener">Omio</a>。<b>選 AVE 或 Alvia</b>（每人 3 件、共 25kg 內免費）；Avlo 只含手提，大行李要加購。約出發前 3 個月（1 月上旬）開賣，查不到就每週回去看</label></div>
+        <div class="cl-item urgent"><input type="checkbox" id="c4"><label for="c4">⛪ <a href="https://sagradafamilia.org/" target="_blank">聖家堂門票</a>：復活節檔期熱門時段會完售，開賣後（約提前數月）馬上買 <b>3/29 或 3/30 上午時段</b>，建議加購塔樓</label></div>
+        <div class="cl-item urgent"><input type="checkbox" id="c5"><label for="c5">🛏 <b>朝聖之路住宿 6 晚 ✅ 已訂</b>：Ideas Peregrinas、Casucho da Peregrina、Rubín 21、Pensión Santa Clara、A Casa do Latoneiro、Sleep Padrón，詳見「住宿」總表與各自取消截止日</label></div>
+        <div class="cl-item urgent"><input type="checkbox" id="c6"><label for="c6">🧳 <b>決定行李方案</b>：目前傾向方案 B（Paq Peregrino 行李箱直寄 Santiago），見「行李方案」。確定後預約郵差到 Ideas Peregrinas 收件</label></div>
+        <div class="cl-item"><input type="checkbox" id="c7"><label for="c7">🏨 城市住宿 ✅ 全部已訂：巴塞隆納 Praktik Vinoteca（已登記雙床）、Santiago 環球酒店、馬德里托萊多門酒店（<b>4/3 前取消其中一筆</b>）、Santiago 2 晚（4/6–4/8）、馬德里 <b>2 晚</b>（4/8–4/10，退房後行李寄櫃台）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c8"><label for="c8">🌊 Costa da Morte 一日團（4/7）：決定在 <a href="https://www.kkday.com/zh-tw/product/603226" target="_blank" rel="noopener">KKday 商品頁</a> 購買，選 4/7、2 位成人，<b>2 天前可免費取消</b>（95 折券 9/30 到期）。報名後當地旅行社會用 WhatsApp 聯絡</label></div>
+        <div class="cl-item"><input type="checkbox" id="c9"><label for="c9">🚄 托雷多來回車票（4/9）：<a href="https://www.renfe.com/es/en" target="_blank" rel="noopener">Renfe 官網</a> 買 Avant 列車（Atocha⇄Toledo 約 33 分，單程約 €14 起）。<b>指定班次、對號入座</b>，錯過不能改搭。約出發前 3 個月開賣</label></div>
+        <div class="cl-item"><input type="checkbox" id="c10"><label for="c10">🏛 奎爾公園、巴特婁之家門票（提前 2–4 週線上買）；普拉多美術館門票（免排隊）</label></div>
+        <div id="custom-booking" class="custom-list"></div>
+        <div class="add-item-row">
+          <input type="text" class="add-input" placeholder="新增自訂待辦…" data-target="custom-booking" data-prefix="cb">
+          <button class="add-btn" onclick="addCustomItem(this)">＋</button>
+        </div>
+      </div>
+      <div class="cl-block">
+        <h4>📋 文件・金錢・功課</h4>
+        <div class="cl-item urgent"><input type="checkbox" id="c11"><label for="c11">🛂 護照效期確認（需超過 2027/10，申根規定離境後仍有 3 個月效期）</label></div>
+        <div class="cl-item urgent"><input type="checkbox" id="c12"><label for="c12">🇪🇺 <b>ETIAS 電子旅行許可</b>：歐盟預計 2026–2027 年間對免簽旅客啟用，<b>出發前 1–2 個月上歐盟官網確認是否已強制</b>，若已上路就線上申請（約 €20，效期 3 年）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c13"><label for="c13">📖 <b>朝聖護照（Credencial）領取方式</b>：3/31 抵達 Tui 後，到 <b>Tui 大教堂</b>現場購買，約 €2–3（關門的話旅館、庇護所也常有賣）。詳見 D5 行程</label></div>
+        <div class="cl-item"><input type="checkbox" id="c14"><label for="c14">🥾 <b>健行鞋磨合</b>：出發前至少累積 50km 的實際行走（連續兩天各 20km 最好），順便測試襪子會不會起水泡</label></div>
+        <div class="cl-item"><input type="checkbox" id="c15"><label for="c15">🛡 旅遊保險（含長程徒步、海外醫療與行李）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c16"><label for="c16">💶 換歐元現金（建議 €300–400：鄉間小店、教堂蓋章奉獻、小費多用現金）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c17"><label for="c17">💳 信用卡至少兩張＋開通海外交易（西班牙感應支付非常普及）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c18"><label for="c18">📱 歐洲 eSIM（出發前在台灣買好）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c19"><label for="c19">🗺 下載離線地圖：巴塞隆納、加利西亞（Tui–Santiago 沿線）、馬德里；徒步 App 裝 <b>Buen Camino</b> 或 <b>Camino Ninja</b>（離線路線＋住宿點）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c20"><label for="c20">🗣 下載 Google 翻譯西班牙文離線包（加利西亞鄉間英文不太通）</label></div>
+        <div id="custom-docs" class="custom-list"></div>
+        <div class="add-item-row">
+          <input type="text" class="add-input" placeholder="新增自訂待辦…" data-target="custom-docs" data-prefix="cd">
+          <button class="add-btn" onclick="addCustomItem(this)">＋</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKET ALERT -->
+  <div id="ticket" style="height:1px;"></div>
+  <div class="ticket-alert">
+    國際機票<b>已開票完成 ✅</b>（訂位代號 QFADEW）。你的旅程<b>正好落在 2027 復活節（3/28 就是復活節主日）</b>，接下來的搶票重心是聖家堂與住宿。
+    <div class="big-date">
+      🛫 <b>機票已開票 ✅ 阿聯酋航空 · QFADEW · TWD 34,152（1 人）</b><br>
+      去程 <b>3/26 23:00</b> TPE→3/27 BCN 12:50（EK367＋EK185，Flex，30kg）｜回程 4/10 22:10 MAD→4/11 21:00 TPE（Saver，25kg）<br>
+      <span style="font-size:12.5px; color:var(--text-soft);">航空公司已把去程改為 <b>EK367 · 3/26（五）23:00 起飛</b>（原 EK387 00:20）——記得上 Manage Booking <b>接受變更</b>、確認 EK185 與回程未連動更改，並以新電子機票的報到時間為準。回程 Saver 票起飛後不可退，改票 USD 125。</span>
+    </div>
+    <div class="big-date">
+      ⛪ <b>聖家堂門票（第二優先）</b><br>
+      官網開賣後立刻買 <b>3/29（一）或 3/30（二）上午時段</b><br>
+      <span style="font-size:12.5px; color:var(--text-soft);">只在官網 sagradafamilia.org 購買（第三方加價）。基本票約 €26 起，強烈建議加購「誕生立面塔樓」。3/29 是復活節翌日（加泰隆尼亞的國定假日），人潮多但照常開放。</span>
+    </div>
+    <ul>
+      <li>3/31 BCN→VGO 機票 ✅ 已訂（SJNN9M）。4/8 Santiago→馬德里改搭火車，約 1 月開賣。</li>
+      <li>14 晚住宿 ✅ 全部已訂。馬德里有兩筆，<b>4/3 前取消其中一筆</b>。</li>
+    </ul>
+    <div class="btnrow">
+      <a class="btn" href="https://sagradafamilia.org/" target="_blank" rel="noopener">聖家堂官方購票</a>
+      <a class="btn pine" href="https://www.elcaminoconcorreos.com/en/rucksack-transfer" target="_blank" rel="noopener">Paq Mochila 接駁預訂</a>
+      <a class="btn slate" href="https://oficinadelperegrino.com/" target="_blank" rel="noopener">朝聖者辦公室官網</a>
+    </div>
+  </div>
+
+  <div class="notice">
+    <b>朝聖之路行李：</b>目前傾向<b>方案 B</b>——行李箱用 Correos 的 <b>Paq Peregrino</b> 從 Tui 直寄 Santiago 郵局寄存（Rúa do Franco 4，大教堂旁），徒步 6 天自己背背包。細節、費用與背包清單見「🧳 行李方案」。行李箱建議用<b>軟殼、輪子內嵌</b>的款式，寄送時比較不容易損壞。
+  </div>
+
+  <!-- HOTELS -->
+  <div id="hotels" style="height:1px;"></div>
+  <div class="weather-wrap">
+    <h3>🏨 住宿總表（2 人・雙床）・14 晚全部已訂 ✅</h3>
+    <div style="font-size:13px; line-height:1.9; margin-bottom:12px;">
+      2026/9/26 全部訂好（經 LINE 導購，訂單顯示原價）。全部可免費取消，取消截止日請記進行事曆。
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="weather-table">
+      <tr><th>日期</th><th>住宿</th><th>房型</th><th>金額（含稅）</th><th>付款</th><th>免費取消<br>最後一天</th><th>注意事項</th></tr>
+      <tr><td class="loc">3/27–3/31<br>巴塞隆納</td><td><b>Praktik Vinoteca</b><br><span style="font-size:12px;">Balmes 51</span></td><td>雙人／雙床房，私人衛浴，15m²</td><td>23,937<br><span style="font-size:12px;">（4 晚）</span></td><td>飯店處理</td><td>3/19</td><td>入住 15:00／退房 12:00。✅ 飯店已回覆：<b>已登記 2 張單人床＋安靜房間</b></td></tr>
+      <tr><td class="loc">3/31<br>Tui</td><td><b>Ideas Peregrinas</b><br><span style="font-size:12px;">Rúa Porta da Pía 1</span></td><td>雙床房，私人衛浴（浴缸），19m²</td><td>2,214</td><td>3/26 扣款</td><td>3/27</td><td>入住 13:00–22:00／<b>退房 10:00</b>；問櫃台 4/1 郵差收行李箱</td></tr>
+      <tr><td class="loc">4/1<br>O Porriño</td><td><b>Casucho da Peregrina</b><br><span style="font-size:12px;">Rúa Antonio Palacios 52</span></td><td>四人房（上下舖），共用衛浴，12m²，含早餐</td><td>1,960</td><td>3/23 扣款</td><td>3/24</td><td>確認整間只住你們兩人</td></tr>
+      <tr><td class="loc">4/2<br>Redondela</td><td><b>Rubín 21</b><br><span style="font-size:12px;">Rúa Xeneral Rubín 21</span></td><td>雙床房，陽台，共用衛浴，10m²</td><td>2,722</td><td>3/29 扣款</td><td>3/30</td><td>入住前 2 天內取消收 50%；面街帶耳塞</td></tr>
+      <tr><td class="loc">4/3<br>Pontevedra</td><td><b>Pensión Santa Clara</b><br><span style="font-size:12px;">Rúa Santa Clara 31, 1º A</span></td><td>雙床房，私人衛浴，16m²</td><td>2,722</td><td><b>已付</b></td><td>3/31</td><td>入住 15:00–<b>20:00</b>；編號 19027；可請他們蓋朝聖護照章</td></tr>
+      <tr><td class="loc">4/4<br>Caldas de Reis</td><td><b>A Casa do Latoneiro</b><br><span style="font-size:12px;">Rúa Real 19</span></td><td>雙床房，私人衛浴，20m²</td><td>2,540</td><td><b>已付</b></td><td>4/1</td><td><b>16:00 才能入住</b>（先午餐、泡溫泉腳）；到約 150m 外的 Hotel Pousada Real 辦入住</td></tr>
+      <tr><td class="loc">4/5<br>Padrón</td><td><b>Sleep Padrón</b><br><span style="font-size:12px;">Av. de Compostela 5</span></td><td>雙人房，私人衛浴，2 張單人床，14m²</td><td>2,613</td><td>3/29 扣款</td><td>3/30</td><td><b>入住 15:00 起／退房 10:00</b>；必填線上入住才會收到門禁密碼</td></tr>
+      <tr><td class="loc">4/6–4/8<br>Santiago</td><td><b>環球酒店 Hotel Universal</b><br><span style="font-size:12px;">Plaza de Galicia 2</span></td><td>雙人／雙床房，<b>已確認 2 張單人床 ✅</b>，私人衛浴</td><td>5,444<br><span style="font-size:12px;">（2 晚）</span></td><td>入住時付款</td><td>4/3</td><td>另付<b>城市觀光稅</b>：€1.65×2 人×2 晚＝<b>€6.60</b>，現場付</td></tr>
+      <tr><td class="loc">4/8–4/10<br>馬德里</td><td><b>托萊多門酒店 Hotel Puerta de Toledo</b><br><span style="font-size:12px;">Glorieta Puerta de Toledo 4</span></td><td>高級雙人或雙床房，2 張單人床，17m²。<b>訂了兩筆</b>：含早餐／不含早餐</td><td>含早餐 16,322<br>不含早餐 14,289<br><span style="font-size:12px;">（2 晚）</span></td><td>4/4 扣款</td><td>4/5</td><td><b style="color:var(--maple-2);">⚠ 4/3 前決定並取消其中一筆</b>，否則兩筆都會扣款。24 小時櫃台（4/10 寄行李）</td></tr>
+    </table>
+    </div>
+    <div style="font-size:13px; line-height:1.9; margin-top:12px;">
+      <b>14 晚全部已訂 ✅</b>（訂單金額，未扣 LINE 導購回饋）：巴塞隆納 23,937＋徒步 6 晚 14,771＋Santiago 5,444＋馬德里 2 晚<br>
+      ・馬德里選<b>含早餐</b>：總計 <b>60,474</b>，每人約 <b>30,237</b>，每人每晚約 <b>2,160</b><br>
+      ・馬德里選<b>不含早餐</b>：總計 <b>58,441</b>，每人約 <b>29,221</b>，每人每晚約 <b>2,087</b><br>
+      ※ 另外現場要付：巴塞隆納城市稅（已含在 Praktik 的 €659.60 內，入住時付）、Santiago 城市觀光稅 €6.60。
+    </div>
+    <div style="font-size:13px; line-height:1.9; margin-top:10px;"><b>Praktik Vinoteca 特殊需求欄（直接複製貼上）：</b></div>
+    <div style="font-family:'Space Mono', monospace; font-size:12.5px; background:var(--paper-2); border:1px dashed var(--gold); border-radius:6px; padding:12px 16px; margin:8px 0;">
+      Twin beds (2 single beds), please. If possible, we would prefer a quiet room facing the interior courtyard. We will arrive around 14:00 on March 27 and would like to store our luggage if the room is not ready. On March 31 we will check out in the morning and would like to leave our luggage until about 11:30. Thank you!
+    </div>
+  </div>
+
+  <!-- HOTEL TODO -->
+  <div id="hoteltodo" style="height:1px;"></div>
+  <div class="weather-wrap">
+    <h3>📬 住宿訊息待辦</h3>
+    <div style="font-size:13px; line-height:1.9; margin-bottom:12px;">
+      原則：罐頭訊息先不回，<b>住宿確定不改後再一起處理</b>。但會影響「要不要取消」的問題，要在該間免費取消截止日前問。
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="weather-table">
+      <tr><th>住宿</th><th>待辦</th><th>最晚時間</th><th>狀態</th></tr>
+      <tr><td class="loc">Praktik Vinoteca</td><td>✅ 信用卡驗證完成（€0，9/27），訂房已確認<br>✅ 飯店回覆已登記 2 張單人床＋安靜房間（屬於備註需求，出發前 1–2 週可再確認一次）</td><td>—</td><td>完成</td></tr>
+      <tr><td class="loc">Casucho da Peregrina<br><span style="font-size:12px;">編號 RH-0010</span></td><td>① 確認四人房只給你們兩人住（訊息寫「床位號碼櫃台提供」）<br>② 完成線上入住（填兩人護照資料；若要求信用卡先停）<br>③ 告知約 13:00 抵達（13:00 前到要事先通知）</td><td>① 3/24 前（免費取消截止）<br>②③ 入住前一天</td><td>待處理</td></tr>
+      <tr><td class="loc">Ideas Peregrinas</td><td>確認 4/1 退房後，行李箱可以留在櫃台等 Correos 郵差收件（Paq Peregrino）</td><td>2 月（預約 Paq Peregrino 前）</td><td>待處理</td></tr>
+      <tr><td class="loc">Rubín 21</td><td>自助入住：屋主 <b>4/2 當天</b>傳入住說明，前一天先給 Wi-Fi 密碼（沒網路也能在門外連上看說明）</td><td>—</td><td>不用處理，當天注意訊息</td></tr>
+      <tr><td class="loc">Pensión Santa Clara<br><span style="font-size:12px;">編號 19027</span></td><td>已確認：雙人房＋私人衛浴＋2 張床，€75 含稅。可選擇提前在住客入口網站登記證件（不要用 email 回傳護照）；入住時請他們蓋朝聖護照章</td><td>—</td><td>不用處理</td></tr>
+      <tr><td class="loc">A Casa do Latoneiro</td><td>回覆抵達時間（約 14:00，步行、無車），並問能否在 16:00 入住前先把背包寄放在 <b>Hotel Pousada Real</b>（辦入住的地方，距離約 150m）。住宿已在 Booking 付清，<b>對方表明不會另外要求付款</b></td><td>出發前</td><td>待回覆</td></tr>
+      <tr><td class="loc">Sleep Padrón<br><span style="font-size:12px;">Ultreia Rooms 經營</span></td><td><b>必填線上入住，兩人都要完成</b>，否則不會收到門禁密碼。連結在 Ultreia Rooms 寄來的 email（ultreiarooms.com）。入住 15:00 起、退房 10:00 前</td><td>出發前（3/26）完成最保險</td><td>待處理</td></tr>
+      <tr><td class="loc">環球酒店 Hotel Universal</td><td>✅ 已確認 2 張單人床。城市觀光稅 €1.65/人/晚，共 €6.60，現場付</td><td>—</td><td>不用處理</td></tr>
+      <tr><td class="loc">托萊多門酒店</td><td><b>訂了含早餐和不含早餐兩筆</b>，決定後取消另一筆</td><td><b>4/3 前</b>（4/4 扣款、4/5 免費取消截止）</td><td>待決定</td></tr>
+    </table>
+    </div>
+    <div style="font-size:12.5px; line-height:1.9; margin-top:10px; color:var(--text-soft);">
+      Santa Clara 聯絡：電話 +34 986 846 820、WhatsApp +34 646 483 071。Sleep Padrón 聯絡：+34 618 209 326（對面有 Eroski 超市和洗衣店）。<br>Casucho 聯絡：WhatsApp／電話 +34 628 63 59 47。規定：入住 13:00–21:00、退房 07:00–10:00、<b>00:00–07:00 大門關閉</b>。<br>
+      Casucho 詢問範本：Hello, this is reservation RH-0010 for April 1st. We booked the quadruple room for 2 people. Could you please confirm that the room is only for the two of us? We will arrive around 1 pm. Thank you!
+    </div>
+  </div>
+
+  <!-- LUGGAGE -->
+  <div id="luggage" style="height:1px;"></div>
+  <div class="weather-wrap">
+    <h3>🧳 朝聖之路行李方案</h3>
+    <div style="font-size:13px; line-height:1.9; margin-bottom:12px;">
+      Correos（西班牙郵政）有兩種服務：<b>Paq Mochila</b> 每天把行李從一站送到下一站（每件上限 15kg）；<b>Paq Peregrino</b> 把行李箱直接寄到 Santiago 的郵局寄存（有 15kg 和 25kg 兩級，可線上預約郵差到住宿收件）。價格為 2025 年參考值，以官網為準。
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="weather-table">
+      <tr><th></th><th>⭐ 方案 B（目前傾向）<br>行李箱直寄終點</th><th>方案 C<br>直寄＋每天接駁小包</th><th>方案 A（不建議）<br>每天接駁行李箱</th></tr>
+      <tr><td class="loc">做法</td><td>行李箱用 Paq Peregrino 從 Tui 寄到 Santiago 郵局；徒步自己背背包</td><td>同 B，另外兩人合裝一個 15kg 內的小包，用 Paq Mochila 每天送到下一站</td><td>行李箱每天用 Paq Mochila 送</td></tr>
+      <tr><td class="loc">每天背</td><td>約 6–7kg（6 天份）</td><td>約 3kg（當天用品）</td><td>約 3kg</td></tr>
+      <tr><td class="loc">估計費用</td><td>2 件 × 約 €31（25kg 級）≈ <b>€63</b></td><td>€63 ＋ 6 段 × 約 €5–8 ≈ <b>€93–111</b></td><td>行李箱超過 15kg 不能寄</td></tr>
+      <tr><td class="loc">住宿限制</td><td><b>無</b>，住哪都行</td><td>每站要有人收包（Rubín 21、Sleep Padrón 需先問屋主）</td><td>同 C</td></tr>
+      <tr><td class="loc">適合</td><td>有運動習慣、想單純省事</td><td>想背得最輕、保護膝蓋腳踝</td><td>—</td></tr>
+    </table>
+    </div>
+    <div style="font-size:13px; line-height:1.9; margin-top:12px;">
+      <b>📦 Paq Peregrino 價格（官網，含稅，每件）：</b>15kg 以內 €20.95／<b>25kg 以內 €31.40</b>（都含郵局寄存 15 天）；要更久可加購 30 或 45 天。你們選 <b>25kg × 2 件 ≈ €63</b>，15 天寄存很夠用。寄送時效：72 小時內送達。
+    </div>
+    <div style="font-size:13px; line-height:1.9; margin-top:10px;">
+      <b>🗓 方案 B 詳細步驟</b>
+      <table class="sched" style="margin-top:6px;">
+        <tr><td>2 月</td><td><b>先問 Ideas Peregrinas</b>：4/1 退房（10:00）後，行李箱可以留在櫃台等郵差來收嗎？拿到書面同意再訂</td></tr>
+        <tr><td>約 3/1</td><td><b>線上預約</b>：到 <a href="https://www.correos.es/es/en/individuals/walk-the-camino-de-santiago-with-correos/luggage-transfers" target="_blank" rel="noopener">Correos 官網 Paq Peregrino 頁面</a>，選「Arrange it online」。<br>※ 有使用者反映 Correos 的線上預約只能訂約一個月內的日期，太早訂不到是正常的</td></tr>
+        <tr><td>填表</td><td>① 選 <b>25kg</b>，兩個行李箱要訂<b>兩件</b><br>② 取件方式選「<b>到住宿收件</b>」，收件地址填 <b>Ideas Peregrinas, Rúa Porta da Pía 1, 36700 Tui</b>，日期填 <b>4/1</b><br>③ 寄件人地址：有論壇使用者反映只能填西班牙地址，就填 Ideas Peregrinas 的地址<br>④ 目的地選 <b>Santiago 郵局</b>：主郵局 Oficina Principal de Correos, <b>Rúa do Franco 4, 15702</b>（全年營業最保險）；如果選單有朝聖者辦公室旁的「Oficina Postal de Atención al Peregrino」且確認 4 月有營業，也可以選它<br>⑤ 付款後會收到 email，<b>把確認信和標籤存下來</b></td></tr>
+        <tr><td>出發前</td><td><b>在台灣先把標籤印好</b>（每件一張）＋確認信印一份帶著；萬一忘了，很多住宿也能幫忙列印</td></tr>
+        <tr><td>3/31 晚</td><td>在 Tui 重新打包：背包裝 6 天份，其餘放行李箱（<b>25kg 內，用行李秤確認</b>）。撕掉舊的航空行李條，<b>貼上 Correos 標籤</b>，行李箱上鎖</td></tr>
+        <tr><td>4/1 早</td><td>退房時把行李箱交給 Ideas Peregrinas 櫃台，出示確認信，請他們交給郵差</td></tr>
+        <tr><td>4/1–4/5</td><td>留意 email：會收到行李<b>已收件、已送達</b>的通知。<b>如果收到「未收件」的通知，要馬上處理</b>（打給 Ideas 或 Correos）</td></tr>
+        <tr><td>4/6</td><td>到 Santiago 郵局出示<b>護照＋預約編號</b>領行李箱。主郵局營業時間：週一至週五 8:30–20:30，週末休息（4/6 是週二）</td></tr>
+      </table>
+    </div>
+    <div style="font-size:12.5px; line-height:1.9; margin-top:6px; color:var(--text-soft);">
+      ※ 官網也寫可以寄到「朝聖之路上的住宿」。如果 Santiago 的旅館同意代收並保管 2–4 天，也可以直接寄到旅館，省去領件；要先問旅館。<br>
+      ※ 論壇上有人遇過郵局人員對流程不熟悉，所以確認信最好印一份西班牙文版本帶著。
+    </div>
+    <div style="font-size:13px; line-height:1.9; margin-top:10px;">
+      <b>方案 B 背包清單（目標 6–7kg，30L 左右）：</b>快乾上衣 ×3、快乾長褲 ×2、羊毛襪 ×3、內衣褲 ×3、刷毛中層 ×1、防水外套＋背包雨罩、睡衣 ×1、拖鞋或涼鞋、快乾毛巾、盥洗小瓶＋少量洗衣精、水泡貼與急救包、充電器＋行動電源、朝聖護照、水壺 1L＋行動糧。每天到站就洗衣服晾乾，衣物循環使用。<br>
+      <span style="color:var(--text-soft); font-size:12.5px;">※ Vueling 3/31 隨身只能帶座位下小包，背包先清空放進行李箱託運，到 Tui 再拿出來打包。</span>
+    </div>
+  </div>
+
+  <!-- WEATHER -->
+  <div id="weather" style="height:1px;"></div>
+  <div class="weather-wrap">
+    <h3>🌡 3 月底–4 月初各地平均氣溫參考</h3>
+    <table class="weather-table">
+      <tr><th>地點</th><th>白天</th><th>夜晚</th><th>服裝建議</th></tr>
+      <tr>
+        <td class="loc">巴塞隆納 D1–D4</td>
+        <td class="day-temp">17°C<span class="temp-bar" style="width:34px;"></span></td>
+        <td class="night-temp">10°C</td>
+        <td class="tip">薄外套＋長袖，海邊傍晚風涼</td>
+      </tr>
+      <tr>
+        <td class="loc" style="color:var(--maple-2); font-weight:900;">加利西亞徒步 D7–D11</td>
+        <td class="day-temp" style="font-size:15px;">14°C<span class="temp-bar" style="width:28px;"></span></td>
+        <td class="night-temp" style="font-size:15px;">6°C</td>
+        <td class="tip"><b style="color:var(--maple-2);">多雨！雨衣＋背包雨罩必備</b>，洋蔥式穿法，清晨出發偏冷</td>
+      </tr>
+      <tr>
+        <td class="loc">Finisterre 海角 D12</td>
+        <td class="day-temp">14°C<span class="temp-bar" style="width:28px;"></span></td>
+        <td class="night-temp">9°C</td>
+        <td class="tip">大西洋岸風大，防風外套</td>
+      </tr>
+      <tr>
+        <td class="loc">馬德里 D13–D15（4/10 深夜離境）</td>
+        <td class="day-temp">18°C<span class="temp-bar" style="width:36px;"></span></td>
+        <td class="night-temp">6°C</td>
+        <td class="tip">日夜溫差大，白天舒適、入夜要外套</td>
+      </tr>
+      <tr>
+        <td class="loc">托雷多 D14</td>
+        <td class="day-temp">18°C<span class="temp-bar" style="width:36px;"></span></td>
+        <td class="night-temp">5°C</td>
+        <td class="tip">山城步行多，好走的鞋</td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:var(--text-soft); margin-top:10px;">※ 以上為歷史平均值，出發前一週再看預報。加利西亞春天「一天四季」很正常——太陽雨交替，別被雨嚇到，雨後的綠色鄉間正是它最美的樣子。</div>
+  </div>
+
+  <!-- PACKING -->
+  <div id="packing" style="height:1px;"></div>
+  <div class="pack-wrap">
+    <h3>🎒 行李清單</h3>
+    <div class="pack-grid">
+      <div>
+        <div class="pack-block">
+          <h4>📄 文件・3C</h4>
+          <div class="pack-item key"><input type="checkbox" id="p1"><label for="p1">護照（＋影本分開放）</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p2"><label for="p2">信用卡（最少兩張）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p3"><label for="p3">歐元現金 €300–400</label></div>
+          <div class="pack-item"><input type="checkbox" id="p4"><label for="p4">手機＋充電線＋歐規轉接頭（C 型雙圓孔）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p5"><label for="p5">行動電源（徒步日全天在外）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p6"><label for="p6">歐洲 eSIM</label></div>
+          <div id="custom-p-doc" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-doc" data-prefix="pd"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+        <div class="pack-block" style="margin-top:16px;">
+          <h4>👕 衣物</h4>
+          <div class="pack-item"><input type="checkbox" id="p7"><label for="p7">快乾 T 恤／排汗衣 × 3–4（徒步天天洗天天穿）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p8"><label for="p8">刷毛或薄羽絨中層 × 1–2</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p9"><label for="p9">防風防水外套（徒步＋海角必備）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p10"><label for="p10">快乾長褲 × 2（徒步用）＋城市便服 1 套</label></div>
+          <div class="pack-item"><input type="checkbox" id="p11"><label for="p11">內衣褲 × 5–6、薄睡衣</label></div>
+          <div class="pack-item"><input type="checkbox" id="p12"><label for="p12">城市用休閒鞋（讓腳換氣）</label></div>
+          <div id="custom-p-cloth" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-cloth" data-prefix="pc"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+      </div>
+      <div>
+        <div class="pack-block">
+          <h4>🥾 朝聖之路必備</h4>
+          <div class="pack-item key"><input type="checkbox" id="p13"><label for="p13">磨合過的健行鞋（出發前走滿 50km！）</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p14"><label for="p14">羊毛登山襪 × 3（防水泡關鍵在襪子）</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p15"><label for="p15">水泡貼（Compeed）＋小護理包</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p16"><label for="p16">輕量雨衣＋背包雨罩（加利西亞春天必用到）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p17"><label for="p17">30L 左右背包（方案 B 要裝 6 天份，目標 6–7kg）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p18"><label for="p18">水壺 1L＋行動糧（堅果、能量棒）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p19"><label for="p19">登山杖（選配，下坡護膝）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p20"><label for="p20">防曬乳＋帽子（沒下雨時太陽很曬）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p21"><label for="p21">朝聖護照防水收納袋＋扇貝殼（Tui 買，掛背包上）</label></div>
+          <div id="custom-p-camino" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-camino" data-prefix="pm"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+        <div class="pack-block" style="margin-top:16px;">
+          <h4>🧴 日用</h4>
+          <div class="pack-item key"><input type="checkbox" id="p28"><label for="p28">防水收納袋／夾鏈袋（背包裡分裝衣服、電子產品、朝聖護照；背包雨罩不一定擋得住整天的雨）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p29"><label for="p29">雨天備案鞋襪：多帶一雙乾襪子放夾鏈袋，到站就換</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p27"><label for="p27">攜帶式行李秤（Vueling 和寄 Paq Peregrino 都限 25kg）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p22"><label for="p22">盥洗用品（歐洲平價旅館不一定有牙刷）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p23"><label for="p23">個人藥品（腸胃藥、止痛藥、肌肉痠痛貼布）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p24"><label for="p24">凡士林／防磨膏（長程徒步防摩擦）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p25"><label for="p25">快乾毛巾</label></div>
+          <div class="pack-item"><input type="checkbox" id="p26"><label for="p26">洗衣袋＋少量洗衣精（徒步日手洗衣物）</label></div>
+          <div id="custom-p-daily" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-daily" data-prefix="pu"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CH1 -->
+  <div id="ch1"></div>
+  <div class="chapter"><span class="num">CH.1</span><span class="ln"></span><span class="lbl">巴塞隆納・高第建築巡禮</span></div>
+  <div class="tag-legend">標示說明：<span class="tag-must">必去</span>整趟的重點　<span class="tag-opt">選配</span>看興趣，沒興趣可以換成散步、逛市場、海邊或咖啡館。行程時間先不調整。</div>
+
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D1 -->
+    <div class="day nagoya">
+      <div class="marker"><span class="d mono">D1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 13l7-1 4-6 2 1-2.5 5.5 6-.5 1.5 2-6.5 2.5.5 5-2 1-2-4.5-4.5 3-1.5-1.5 3-3z" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>3/26 (五) 晚間起飛 → 3/27 (六) 中午抵巴塞隆納</h2><span class="stay-tag">宿 · Praktik Vinoteca（4 晚）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val"><b>EK367</b> 台北 <b>3/26（五）23:00</b> → 杜拜 04:55（轉機 3h20，可以悠哉吃早餐）→ <b>EK185</b> 08:15 → <span class="hl">巴塞隆納 3/27 12:50 落地</span>。<b>週五準時下班直奔機場：20:30 前抵達桃園 T2</b>，晚餐在機場解決；手提限 7kg（55×38×22cm）</div></div>
+          <div class="row"><div class="label">下午</div><div class="val">Aerobus 機場巴士 → 加泰隆尼亞廣場（約 35 分、€8 上下）<span class="suica ok">✅ 感應信用卡可付</span> → 15:00 旅館入住 → 哥德區暖身散步：大教堂、國王廣場、Bisbe 橋 → 19:30 tapas 晚餐，21:30 前睡，時差一天搞定</div></div>
+          <div class="row"><div class="label">提醒</div><div class="val">託運行李選<b>軟殼、輪子內嵌</b>的行李箱，控制在 <b>25kg 內</b>（Vueling 和回程阿聯酋都是 25kg）——之後會用郵局寄到 Santiago，軟殼比較耐碰撞</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D2 -->
+    <div class="day nagoya">
+      <div class="marker"><span class="d mono">D2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 6v11H4V9l8-6z" stroke-linejoin="round"/><path d="M9 20v-5h6v5"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>3/28 (日) 復活節主日・舊城與海</h2><span class="stay-tag">宿 · 巴塞隆納（連住）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">注意</div><div class="val">今天是<span class="hl">復活節主日</span>——大多數商店、超市休息，美術館和觀光區餐廳照開（建議訂位）。昨天多賺的半天讓今天可以睡到自然醒</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">Born 區巷弄 → <b>畢卡索美術館</b><span class="tag-opt">選配</span>（線上預約時段）→ 聖卡特琳娜市場波浪屋頂（週日公休，看外觀）→ 海之聖母教堂 → 下午 Barceloneta 海邊<span class="tag-must">必去</span> → 傍晚海港落日</div></div>
+          <details class="more"><summary>展開建議節奏</summary><div class="inner">
+            <table class="sched">
+              <tr><td>10:00</td><td>Born 區散步、海之聖母教堂（加泰隆尼亞哥德式的極致，復活節主日彌撒鐘聲滿城）</td></tr>
+              <tr><td>11:30</td><td>畢卡索美術館：看少年畢卡索如何從學院派長成畢卡索（藍色時期收藏全球最強）</td></tr>
+              <tr><td>13:30</td><td>經過聖卡特琳娜市場看波浪馬賽克屋頂（<b>週日公休</b>，只看外觀）→ Born 區餐廳午餐</td></tr>
+              <tr><td>15:30</td><td>城堡公園野餐曬太陽 → 步行到 Barceloneta 海灘吹風</td></tr>
+              <tr><td>19:30</td><td>海港邊晚餐，看落日收工</td></tr>
+            </table>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D3 -->
+    <div class="day nagoya">
+      <div class="marker"><span class="d mono">D3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 21V10l3-4V3M12 21V8l3-4M18 21V10l-3-4" stroke-linejoin="round"/><path d="M4 21h16"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>3/29 (一) 聖家堂日</h2><span class="stay-tag">宿 · 巴塞隆納（連住）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">票券</div><div class="val"><span class="hl">聖家堂門票務必提前線上買好時段票</span>（今天是復活節翌日，加泰隆尼亞的假日，人潮多但照常開放）</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">聖家堂（含塔樓）<span class="tag-must">必去</span>＋ 聖保羅醫院現代主義建築群<span class="tag-opt">選配</span>＋ 感恩大道櫥窗散步</div></div>
+          <details class="more"><summary>展開完整時間軸</summary><div class="inner">
+            <table class="sched">
+              <tr><td>09:00</td><td>聖家堂開門場入場（早場光線斜射彩窗最美）：誕生立面 → 中殿森林柱 → 受難立面，語音導覽值得聽</td></tr>
+              <tr><td>10:30</td><td>搭電梯上誕生立面塔樓，俯瞰巴塞隆納棋盤街區（記得回程走旋轉梯下來）</td></tr>
+              <tr><td>12:00</td><td>步行 10 分鐘到 <b>聖保羅醫院（Sant Pau）</b>：高第同期建築師 Domènech i Montaner 的馬賽克花園醫院，人少質高</td></tr>
+              <tr><td>14:00</td><td>午餐後沿感恩大道（Passeig de Gràcia）往南散步，遠觀明天要進去的巴特婁之家、米拉之家外觀</td></tr>
+              <tr><td>17:00</td><td>Gràcia 區小廣場咖啡，融入在地人的假日午後</td></tr>
+              <tr><td>20:00</td><td>晚餐：試試加泰隆尼亞菜（推薦 pa amb tomàquet 番茄麵包＋烤時蔬 calçots 季末）</td></tr>
+            </table>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D4 -->
+    <div class="day nagoya">
+      <div class="marker"><span class="d mono">D4</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21c3-6 6-9 9-9s6 3 9 9" stroke-linecap="round"/><circle cx="12" cy="6" r="3"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>3/30 (二) 高第全餐：巴特婁・米拉・奎爾公園</h2><span class="stay-tag">宿 · 巴塞隆納（連住）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">票券</div><div class="val">三個點都要<b>提前線上買時段票</b>：巴特婁之家（早場便宜）、米拉之家、奎爾公園（入園有時段管制）</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">海洋骨骼的巴特婁之家<span class="tag-must">必去</span>→ 波浪屋頂的米拉之家<span class="tag-opt">選配</span>（沒興趣可只看外觀，就在同一條街）→ 馬賽克蜥蜴的奎爾公園夕陽<span class="tag-must">必去</span></div></div>
+          <details class="more"><summary>展開完整時間軸</summary><div class="inner">
+            <table class="sched">
+              <tr><td>09:00</td><td>巴特婁之家早場（AR 導覽器很沉浸），約 1.5h</td></tr>
+              <tr><td>11:00</td><td>步行 5 分鐘到米拉之家（La Pedrera）：中庭、閣樓拱肋、外星士兵煙囪屋頂，約 1.5h</td></tr>
+              <tr><td>13:00</td><td>午餐後搭地鐵＋步行（或計程車）上奎爾公園——注意<b>從 Lesseps 站上山是上坡</b>，體力保留給明天開始的徒步，搭 Bus 24 到公園旁最省力</td></tr>
+              <tr><td>15:30</td><td>奎爾公園時段入場：糖果屋門房、馬賽克蜥蜴、波浪長椅平台俯瞰全城到海</td></tr>
+              <tr><td>18:00</td><td>下山回市區，晚上收拾行李：<b>把徒步 5 天要用的東西集中</b>（見行李清單「朝聖之路必備」）</td></tr>
+            </table>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+      </div>
+
+  <!-- CH2 -->
+  <div id="ch2"></div>
+  <div class="chapter"><span class="num">CH.2</span><span class="ln"></span><span class="lbl">朝聖之路・葡萄牙之路 Tui → Santiago 115km</span></div>
+
+  <div id="mapOverview" class="camino-map" style="height:380px;"></div>
+  <div class="map-note">🗺 朝聖路網總覽：條條大路通 Santiago——細虛線為各主要路線示意，<b style="color:#5b3a8e;">加粗紫色實線</b>就是你要走的段落：葡萄牙之路末段 Tui → Santiago，粉線為抵達後的世界盡頭延伸。點線與城鎮可看說明。</div>
+
+  <div id="planB">
+  <div id="mapB" class="camino-map"></div>
+  <div class="map-note">🗺 你的路線：Tui → Santiago 沿大西洋灣岸由南向北。可縮放拖曳、點城鎮看當日資訊；連線為示意，實際步道跟著黃箭頭走。</div>
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D5 -->
+    <div class="day rest">
+      <div class="marker"><span class="d mono">D5</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 13l7-1 4-6 2 1-2.5 5.5 6-.5 1.5 2-6.5 2.5.5 5-2 1-2-4.5-4.5 3-1.5-1.5 3-3z" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>3/31 (三) 巴塞隆納館 → 飛維哥 → Tui</h2><span class="stay-tag">宿 · Ideas Peregrinas（Tui）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">上午</div><div class="val"><span class="hl">巴塞隆納館（Pavelló Mies van der Rohe）</span><span class="tag-opt">選配</span>：密斯・凡德羅 1929 年世博德國館復刻，「少即是多」的現代主義原點——大理石、鍍鉻柱、一泓靜水，跟高第的有機曲線是光譜的兩端。就在西班牙廣場旁，10:00 開門，45 分鐘足夠</div></div>
+          <div class="row"><div class="label">航班</div><div class="val"><b>Vueling VY1270</b> 巴塞隆納 14:00 → 維哥 15:50（直飛）。<b>FLY 方案</b>，每人 €80.99（含 25kg 託運＋座位下小包 40×30×20），座位 5E、5F <span class="suica ok">✅ 已訂 SJNN9M</span></div></div>
+          <div class="relay">
+            <div class="rl-title mono">🔗 全日交通接力</div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l8 6v11H4V9l8-6z" stroke-linejoin="round"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">09:30 退房、行李寄放飯店櫃台</div><div class="rl-time">地鐵 L3 Passeig de Gràcia → Espanya（3 站）</div><div class="rl-note">10:00–10:45 參觀巴塞隆納館</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="7" width="16" height="10" rx="2"/><circle cx="8.5" cy="17" r="1.6" fill="currentColor" stroke="none"/><circle cx="15.5" cy="17" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">11:15 回飯店取行李 → Aerobus 加泰隆尼亞廣場 → 機場</div><div class="rl-time">約 11:30 上車 · 35 分 · 約 €7–8</div><div class="rl-note">A1 往 T1、A2 往 T2，以登機證的航廈為準（Vueling 通常在 T1）</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M2 13l7-1 4-6 2 1-2.5 5.5 6-.5 1.5 2-6.5 2.5.5 5-2 1-2-4.5-4.5 3-1.5-1.5 3-3z" stroke-linejoin="round"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">VY1270 巴塞隆納 → 維哥</div><div class="rl-time">14:00 → 15:50 · 飛行 1h50</div><div class="rl-note">託運行李上限 25kg；隨身只能帶座位下小包（40×30×20cm），徒步背包可清空壓扁放進行李箱</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon peak"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="7" width="16" height="10" rx="2"/><circle cx="8.5" cy="17" r="1.6" fill="currentColor" stroke="none"/><circle cx="15.5" cy="17" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">維哥機場 → Tui</div><div class="rl-time">計程車約 30 分 · €35–40 <span class="suica cash">⚠ 先詢價</span></div><div class="rl-note">省錢版：機場巴士進維哥市區（20 分）→ 火車或巴士到 Tui（35–45 分），約多花 1 小時</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l8 6v11H4V9l8-6z" stroke-linejoin="round"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">抵達 Tui</div><div class="rl-time">約 17:00</div><div class="rl-note">入住、領朝聖護照、傍晚散步</div></div>
+            </div>
+          </div>
+          <details class="more" open><summary>展開：Tui 傍晚＋領朝聖護照＋行李注意</summary><div class="inner">
+            <table class="sched">
+              <tr><td>17:30</td><td>到 <b>Tui 大教堂</b>（要塞式羅馬式教堂）購買朝聖護照約 €2–3，蓋下起點章。<b>大教堂開放時間行前確認</b>；若已關門，住宿 Ideas Peregrinas 附設的朝聖者咖啡館可以問問</td></tr>
+              <tr><td>18:30</td><td>走過國際橋到葡萄牙 Valença 星形要塞散步，<b>用腳跨一次國界</b> 🇵🇹（約 30 分鐘可往返）；四月初約 20:40 日落</td></tr>
+              <tr><td>20:00</td><td><b>重新打包</b>：背包裝 6 天份（6–7kg），其餘放行李箱；跟櫃台確認明天郵差來收行李箱（Paq Peregrino 寄到 Santiago）</td></tr>
+              <tr><td>21:00</td><td>朝聖者晚餐，早點睡。明天只走 16km，輕鬆開始</td></tr>
+            </table>
+            <div class="bus-note">🧳 <b>行李箱怎麼處理</b>：方案 B 是出發前線上預約 Paq Peregrino，4/1 由郵差到 Ideas Peregrinas 收件，直寄 Santiago 郵局寄存，4/6 再去領。詳見「行李方案」。</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D6 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D6</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 22l3-7-2-3 1-5 4 2 2 3M9 12l-3 2-2 6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/1 (四) 徒步①：Tui → O Porriño（約 16km）</h2><span class="stay-tag">宿 · Casucho da Peregrina</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">路況</div><div class="val">約 4–4.5h，平緩的河畔林道與村徑。<span class="hl">第一天刻意走短，讓腳和背包先適應</span>。接近 O Porriño 前有一段工業區，記得走「河畔綠色替代道」（有路標）</div></div>
+          <div class="row"><div class="label">行李</div><div class="val">行李箱留在 Ideas Peregrinas 等郵差收件（寄往 Santiago），你們背著背包出發。第一天只走 16km，順便檢查背包重量和背負感</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">米尼奧河晨霧、Louro 河谷的森林步道。下午就到，有時間檢查腳況、調整背包</div></div>
+          <details class="more"><summary>展開徒步日標準節奏（之後每天同款）</summary><div class="inner">
+            <table class="sched">
+              <tr><td>08:00</td><td>早餐、行李放櫃台、蓋今日第 1 個章（住宿章），跟著黃箭頭出發</td></tr>
+              <tr><td>10:30</td><td>途中咖啡站休息，<b>蓋今日第 2 個章</b>（從 Tui 起每天至少 2 個章）</td></tr>
+              <tr><td>13:00</td><td>抵達 O Porriño 午餐；沖澡、洗衣晾乾、伸展</td></tr>
+              <tr><td>20:00</td><td>朝聖者晚餐，21:30 睡</td></tr>
+            </table>
+            <div class="bus-note">🦶 護腳三原則：襪子一濕就換、休息就脫鞋透氣、有熱點感立刻貼水泡貼（別等起水泡）。</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D7 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D7</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 22l3-7-2-3 1-5 4 2 2 3M9 12l-3 2-2 6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/2 (五) 徒步②：O Porriño → Redondela（約 15km）</h2><span class="stay-tag">宿 · Rubín 21</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">路況</div><div class="val">約 4h。經過 Mos 小村，中段有一段上坡到 Santiaguiño de Antas 高點，之後一路下坡進 Redondela</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">下坡時<span class="hl">第一次遠眺維哥灣（Ría de Vigo）</span>——葡萄牙之路的招牌海灣風景從今天開始。Redondela 是被兩座鐵道高架橋橫跨的小鎮</div></div>
+          <div class="row"><div class="label">小結</div><div class="val">原本 31km 的一天拆成兩天，前兩天各 15–16km，身體適應後再接後面 19–25km 的路段</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B-D8 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D8</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 22l3-7-2-3 1-5 4 2 2 3M9 12l-3 2-2 6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/3 (六) 徒步③：Redondela → Pontevedra（19km）</h2><span class="stay-tag">宿 · Pensión Santa Clara</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">路況</div><div class="val">約 5h，兩段緩坡夾著海灣風景，是很多人心中葡萄牙之路最美的一段</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">俯瞰維哥灣的松林高點 → <b>Arcade 午餐吃生蠔</b>（加利西亞著名蠔鄉，配 Albariño 白酒）→ 跨過中世紀石橋 Ponte Sampaio（拿破崙軍隊在此吃過敗仗）→ 傍晚抵達 <b>Pontevedra 老城</b>：全西班牙行人化做得最好的老城之一，石板廣場一座接一座，值得好好夜遊</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B-D9 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D9</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 22l3-7-2-3 1-5 4 2 2 3M9 12l-3 2-2 6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/4 (日) 徒步④：Pontevedra → Caldas de Reis（21km）</h2><span class="stay-tag">宿 · A Casa do Latoneiro</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">路況</div><div class="val">約 5.5h，森林、葡萄園與小溪交替，坡度溫和。復活節後第一個週日，村莊教堂鐘聲一路相伴</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">出城的朝聖者小教堂（貝殼平面的 A Virxe Peregrina）→ 桉樹與松林長廊 → 終點 <b>Caldas de Reis 是溫泉小鎮：鎮上有免費的露天熱泉足湯（Burga 泉），走完 21km 把腳泡進去的那一刻，人生圓滿</b></div></div>
+          <div class="row"><div class="label">入住</div><div class="val"><span class="hl">A Casa do Latoneiro 16:00 才能入住</span>，到約 150m 外的 Hotel Pousada Real 辦手續。下午一兩點到 Caldas 後，先吃午餐、去 Burga 溫泉泡腳，再去入住</div></div>
+          <div class="row"><div class="label">補給</div><div class="val">週日鄉間店家開得少，<span class="hl">出發前裝滿水、帶行動糧</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B-D10 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D10</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 22l3-7-2-3 1-5 4 2 2 3M9 12l-3 2-2 6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/5 (一) 徒步⑤：Caldas de Reis → Padrón（19km）</h2><span class="stay-tag">宿 · Sleep Padrón</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">路況</div><div class="val">輕鬆日（約 5h），溪谷森林緩下坡進入 Padrón。腿力回血，養精蓄銳迎接明天終點</div></div>
+          <div class="row"><div class="label">入住</div><div class="val"><span class="hl">Sleep Padrón 15:00 才能入住</span>，自助入住，門禁密碼要先完成線上入住才會收到。中午前後抵達的話，先吃午餐、逛聖雅各教堂</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val"><b>Padrón 就是炸青椒（Pimientos de Padrón）的原產地</b>——今晚必點本尊；這裡也是聖雅各傳說中遺體乘石船上岸之地，教堂祭壇下方供著繫船的石碑「Pedrón」，鎮名由此而來。朝聖故事的起點，剛好排在你抵達終點的前一晚</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B-D11 -->
+    <div class="day alpine">
+      <div class="marker"><span class="d mono">D11</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 21V10l3-4V3M12 21V8l3-4M18 21V10l-3-4" stroke-linejoin="round"/><path d="M4 21h16"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/6 (二) 徒步⑥：Padrón → Santiago 大教堂（25km）🎉</h2><span class="stay-tag">宿 · 環球酒店 Hotel Universal（2晚）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">路況</div><div class="val">約 6–6.5h（全程第二長的一天），前段平緩、進城前有一段緩上坡。今天早點出發</div></div>
+          <div class="row"><div class="label">高潮</div><div class="val"><span class="hl">從南面走進 Obradoiro 廣場，回頭仰望大教堂——115 公里在這一刻收束。</span>廣場上有人歡呼、有人流淚，都是真的</div></div>
+          <details class="more" open><summary>展開：領證書＋朝聖者彌撒攻略</summary><div class="inner">
+            <table class="sched">
+              <tr><td>06:30</td><td>早點出發（今天 25km，要趕中午彌撒就得勤快些；趕不上也有晚間場）</td></tr>
+              <tr><td>12:30</td><td>抵達 Obradoiro 廣場！拍照、坐在石板地上發呆都是儀式的一部分</td></tr>
+              <tr><td>13:30</td><td>到<b>朝聖者辦公室（Oficina del Peregrino, Rúa Carretas 33）</b>：出示蓋滿章的護照 → 領 <b>Compostela 證書（免費）</b>，可加購距離證書（€3）＋證書紙筒（€1）。旺季要排隊，先上官網領 QR 號碼牌可省時間</td></tr>
+              <tr><td>15:00</td><td>到大教堂旁的 <b>Correos 郵局（Rúa do Franco 4）領行李箱</b>（帶護照，營業時間行前確認）→ 拖到旅館 Check-in</td></tr>
+              <tr><td>17:00</td><td>老城慢晃：Quintana 廣場、市場（Mercado de Abastos）、參觀大教堂內部與聖雅各墓室</td></tr>
+              <tr><td>19:30</td><td>大教堂<b>晚間朝聖者彌撒</b>（明天中午也有場次，運氣好遇到八人操作的巨型香爐 Botafumeiro 擺盪）</td></tr>
+              <tr><td>21:00</td><td>慶功晚餐：加利西亞海鮮＋Albariño 白酒，敬自己一杯 🥂</td></tr>
+            </table>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /planB -->
+
+  <!-- CH3 -->
+  <div id="ch3"></div>
+  <div class="chapter"><span class="num">CH.3</span><span class="ln"></span><span class="lbl">世界盡頭・死亡海岸</span></div>
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D12 -->
+    <div class="day toyama">
+      <div class="marker"><span class="d mono">D12</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0" stroke-linecap="round"/><path d="M12 3v7M12 3l4 3M12 3L8 6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/7 (三) Costa da Morte 一日遊：Muxía ＋ Finisterre</h2><span class="stay-tag">宿 · Santiago（連住）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val"><b>死亡海岸一日團</b>（<a href="https://www.kkday.com/zh-tw/product/603226" target="_blank" rel="noopener">KKday 商品頁</a>）：<b>08:45</b> 在加利西亞旅行社辦公室前集合（<b>Rúa das Casas Reais 31</b>，從旅館走約 10 分），<b>18:30</b> 回到 Santiago。導遊用西班牙語和英語，另有<b>中文語音導覽</b>（手機掃 QR code 聽）<span class="suica cash">⚠ 報名後旅行社用 WhatsApp 聯絡</span></div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">Ponte Maceira 中世紀石橋 → Muxía 海邊聖母教堂（建在巨石上、浪花拍岸）→ <b>Finisterre 海角：0.0km 里程碑、燈塔、大西洋斷崖</b> → Finisterre 鎮午餐 → Ézaro 瀑布 → Carnota 石造穀倉 → Muros 漁港——中世紀人相信的世界盡頭，也是朝聖之路精神上的真正終點</div></div>
+          <div class="row"><div class="label">提醒</div><div class="val">海角風大，防風外套帶著；把朝聖護照也帶去——<span class="hl">Fisterra 有專屬的章</span>，蓋在證書格子的最後一格剛剛好</div></div>
+          <details class="more"><summary>展開：回 Santiago 後的晚上</summary><div class="inner">
+            <table class="sched">
+              <tr><td>19:00</td><td>回到 Santiago，最後一晚老城：Franco 街 tapas 巡禮（推薦 pimientos de Padrón 炸青椒、zamburiñas 烤扇貝）</td></tr>
+              <tr><td>21:00</td><td>夜遊 Obradoiro 廣場——打燈後的大教堂是另一種莊嚴，跟它道別</td></tr>
+              <tr><td>22:00</td><td>收行李、線上報到明早班機</td></tr>
+            </table>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CH4 -->
+  <div id="ch4"></div>
+  <div class="chapter"><span class="num">CH.4</span><span class="ln"></span><span class="lbl">馬德里・藝術收尾</span></div>
+  <div class="tag-legend">標示說明：<span class="tag-must">必去</span>整趟的重點　<span class="tag-opt">選配</span>看興趣，沒興趣可以換成散步、逛市場、海邊或咖啡館。行程時間先不調整。</div>
+
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D13 -->
+    <div class="day city">
+      <div class="marker"><span class="d mono">D13</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 13l7-1 4-6 2 1-2.5 5.5 6-.5 1.5 2-6.5 2.5.5 5-2 1-2-4.5-4.5 3-1.5-1.5 3-3z" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/8 (四) 搭火車到馬德里・王宮與老城</h2><span class="stay-tag">宿 · 托萊多門酒店（2晚）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">Santiago 火車站（Rúa do Hórreo 75A，從旅館沿同一條路往下走約 10–15 分）搭 <b>AVE／Alvia 約 9–10 點出發</b> → 約 3 小時抵馬德里 <b>Chamartín</b> 站 → 拖行李搭計程車到<b>托萊多門酒店</b>約 20 分（之後王宮、主廣場都走路 15–20 分）。車票：<a href="https://www.renfe.com/es/en" target="_blank" rel="noopener">Renfe 官網</a>（或 <a href="https://www.thetrainline.com/" target="_blank" rel="noopener">Trainline</a>／<a href="https://www.omio.com/" target="_blank" rel="noopener">Omio</a>）<span class="suica ok">✅ 大行李不用加價（AVE／Alvia）</span></div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">下午王宮<span class="tag-opt">選配</span>（歐洲最大王宮之一，建議線上買票）→ 主廣場 Plaza Mayor<span class="tag-must">必去</span>→ San Miguel 市場站著吃 tapas<span class="tag-must">必去</span>→ 傍晚 <b>Templo de Debod 埃及神殿看日落</b><span class="tag-must">必去</span>（馬德里最經典的夕陽點）</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D14 -->
+    <div class="day city">
+      <div class="marker"><span class="d mono">D14</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M3 8l9-5 9 5M7 12v4M12 12v4M17 12v4"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/9 (五) 托雷多一日：三文化古城</h2><span class="stay-tag">宿 · 馬德里（連住）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">從托萊多門酒店<b>走路 20–25 分</b>（或搭公車）到 Atocha 站，搭 <b>Avant 高速列車 33 分鐘</b>直達托雷多（來回約 €22，<span class="hl">Renfe 提前買票並劃位</span>）<span class="suica cash">⚠ 需訂位、對號入座</span></div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">整座山城就是世界遺產：托雷多大教堂<span class="tag-must">必去</span>（西班牙哥德巔峰）→ 聖多默教堂看<b>艾爾・葛雷柯《歐貴茲伯爵的葬禮》</b><span class="tag-opt">選配</span>→ 猶太區巷弄<span class="tag-must">必去</span>→ 河對岸 <b>Mirador del Valle 觀景台</b>拍全城<span class="tag-must">必去</span></div></div>
+          <details class="more"><summary>展開時間軸</summary><div class="inner">
+            <table class="sched">
+              <tr><td>09:20</td><td>Atocha 出發（建議 9–10 點間班次；托雷多車站本身就是新摩爾式建築的景點）</td></tr>
+              <tr><td>10:00</td><td>車站步行或搭手扶梯系統上山進老城</td></tr>
+              <tr><td>10:30</td><td>托雷多大教堂（含 El Greco、Goya 收藏的聖器室）約 1.5h</td></tr>
+              <tr><td>12:30</td><td>午餐試鹿肉燉菜或烤乳豬；甜點買修道院杏仁糖 mazapán</td></tr>
+              <tr><td>14:00</td><td>聖多默教堂《歐貴茲伯爵的葬禮》→ 猶太區、白色聖母瑪利亞猶太會堂</td></tr>
+              <tr><td>16:30</td><td>計程車或觀光小火車到河對岸 Mirador del Valle：黃昏斜光下的全景，托雷多最美的一張照片</td></tr>
+              <tr><td>18:30</td><td>回程列車 → 馬德里；晚上先整理行李、辦回程航班線上報到</td></tr>
+            </table>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D15 -->
+    <div class="day city">
+      <div class="marker"><span class="d mono">D15</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="7" width="16" height="10" rx="2"/><circle cx="8.5" cy="17" r="1.6" fill="currentColor" stroke="none"/><circle cx="15.5" cy="17" r="1.6" fill="currentColor" stroke="none"/><path d="M4 11h16"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/10 (六) 藝術金三角＋深夜啟程</h2><span class="stay-tag">宿 · 機上</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">票券</div><div class="val">普拉多線上買票免排隊；蘇菲亞王后藝術中心同樣建議預約（兩館都有免費時段但人山人海，不如買票換時間）</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">上午<b>普拉多美術館</b><span class="tag-opt">選配</span>：委拉斯奎茲《侍女》、哥雅《黑畫》、波希《人間樂園》→ 下午<b>蘇菲亞</b>：畢卡索《格爾尼卡》本尊<span class="tag-must">必去</span>（只看這幅約 1 小時也可）→ 雷提洛公園<span class="tag-opt">選配</span>→ <span class="hl">18:30 取行李出發去機場，22:10 EK144 起飛</span></div></div>
+          <details class="more" open><summary>展開：含機場銜接的完整時間軸</summary><div class="inner">
+            <table class="sched">
+              <tr><td>09:30</td><td>退房、行李寄放旅館櫃台（晚上回來拿）</td></tr>
+              <tr><td>10:00</td><td>普拉多開門場進場，先直奔《侍女》再回頭慢逛（2.5–3h 剛好，貪心會鐵腿）</td></tr>
+              <tr><td>13:30</td><td>文學區（Barrio de las Letras）午餐</td></tr>
+              <tr><td>15:00</td><td>蘇菲亞王后藝術中心：《格爾尼卡》所在的 206 展間留最多時間</td></tr>
+              <tr><td>17:00</td><td>雷提洛公園散步收尾＋最後採買伴手禮（火腿真空包、橄欖油、杏仁糖）——注意回程託運額度 25kg</td></tr>
+              <tr><td>18:30</td><td>回旅館取行李 → 計程車（約 €35，30 分）或地鐵 8 號線＋接駁往 Barajas <b>T4</b></td></tr>
+              <tr><td>19:10</td><td>抵達 T4 辦託運（報到櫃台 19:10 開放）→ 搭航廈內部電車前往 <b>T4 衛星廳（T4S）</b>登機門——這段要多留 20 分鐘</td></tr>
+              <tr><td>22:10</td><td><b>EK144 起飛</b> → 杜拜 07:15（轉機 1h30）→ EK386 08:45 → 台北</td></tr>
+            </table>
+            <div class="bus-note">🍩 若腳程快、雷提洛想省略，17:30 還來得及去 San Ginés 吃一份告別吉拿棒。</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D16 -->
+    <div class="day home">
+      <div class="marker"><span class="d mono">D16</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 6v11H4V9l8-6z" stroke-linejoin="round"/><path d="M9 20v-5h6v5"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>4/11 (日) 飛行日・晚上 21:00 回到台北</h2><span class="stay-tag">回台灣 🎉</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">杜拜 07:15 落地、轉機 1h30 → <b>EK386</b> 08:45 起飛 → <span class="hl">台北 21:00 落地</span>，到家約 23:00，<b>週一直接上班不用請假</b>。機上策略：後段 8h15 盡量睡，落地後撐到當晚正常時間再睡，時差傷害最小</div></div>
+          <div class="row"><div class="label">回顧</div><div class="val">高第的森林柱、115 公里的黃箭頭、Obradoiro 廣場的眼淚、世界盡頭的浪、《格爾尼卡》前的沉默——16 天，帶著 Compostela 證書回家 🐚</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  台北 → 巴塞隆納 → 葡萄牙之路115km → Santiago → Finisterre → 馬德里 → 托雷多 → 台北 ／ 十六天<br>
+  <a href="https://www.elcaminoconcorreos.com/en/rucksack-transfer" target="_blank" rel="noopener">Paq Mochila 行李接駁</a> ・
+  <a href="https://oficinadelperegrino.com/" target="_blank" rel="noopener">朝聖者辦公室</a> ・
+  <a href="https://www.monbus.es/en" target="_blank" rel="noopener">Monbus 巴士</a> ・
+  <a href="https://www.renfe.com/" target="_blank" rel="noopener">Renfe 火車</a> ・
+  <a href="https://sagradafamilia.org/" target="_blank" rel="noopener">聖家堂官網</a>
+</footer>
+
+<script>
+  // 星星
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<50;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*40+'%';
+    s.style.animationDelay=(Math.random()*3.4)+'s';
+    s.style.width=s.style.height=(Math.random()*1.6+1)+'px';
+    starsEl.appendChild(s);
+  }
+  // ── 勾選狀態記憶 ──
+  function bindCheckbox(cb){
+    const key='cb_'+cb.id;
+    if(localStorage.getItem(key)==='1'){ cb.checked=true; }
+    cb.addEventListener('change',()=>{
+      localStorage.setItem(key, cb.checked?'1':'0');
+      const lbl=cb.parentElement.querySelector('label');
+      if(lbl) lbl.style.textDecoration=cb.checked?'line-through':'';
+    });
+    const lbl=cb.parentElement.querySelector('label');
+    if(lbl && cb.checked) lbl.style.textDecoration='line-through';
+  }
+  document.querySelectorAll('input[type=checkbox]').forEach(bindCheckbox);
+
+  // ── 自訂新增項目 ──
+  // 讀取已儲存的自訂項目並渲染
+  function loadCustomItems(){
+    document.querySelectorAll('.custom-list').forEach(list=>{
+      const id=list.id;
+      const saved=JSON.parse(localStorage.getItem('custom_'+id)||'[]');
+      saved.forEach(item=>renderCustomItem(list, item.text, item.id, item.checked));
+    });
+  }
+
+  function saveCustomItems(listId){
+    const list=document.getElementById(listId);
+    const items=[];
+    list.querySelectorAll('.cl-item, .pack-item').forEach(row=>{
+      const cb=row.querySelector('input[type=checkbox]');
+      const lbl=row.querySelector('label');
+      if(cb&&lbl) items.push({id:cb.id, text:lbl.textContent.replace('✕','').trim(), checked:cb.checked});
+    });
+    localStorage.setItem('custom_'+listId, JSON.stringify(items));
+  }
+
+  function renderCustomItem(list, text, cbId, checked){
+    const div=document.createElement('div');
+    div.className='cl-item';
+    const uid=cbId||('cust_'+Date.now()+'_'+Math.random().toString(36).slice(2,6));
+    div.innerHTML=`<input type="checkbox" id="${uid}" ${checked?'checked':''}><label for="${uid}">${text}</label><button class="del-btn" title="刪除" onclick="deleteCustomItem(this)">✕</button>`;
+    list.appendChild(div);
+    const cb=div.querySelector('input');
+    bindCheckbox(cb);
+    cb.addEventListener('change',()=>saveCustomItems(list.id));
+  }
+
+  function addCustomItem(btn){
+    const row=btn.parentElement;
+    const input=row.querySelector('.add-input');
+    const text=input.value.trim();
+    if(!text) return;
+    const targetId=input.dataset.target;
+    const prefix=input.dataset.prefix||'cu';
+    const list=document.getElementById(targetId);
+    const cbId=prefix+'_'+Date.now();
+    renderCustomItem(list, text, cbId, false);
+    saveCustomItems(targetId);
+    input.value='';
+    input.focus();
+  }
+
+  function deleteCustomItem(btn){
+    const row=btn.parentElement;
+    const list=row.parentElement;
+    row.remove();
+    saveCustomItems(list.id);
+  }
+
+  // Enter 鍵也能新增
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter' && e.target.classList.contains('add-input')){
+      const btn=e.target.parentElement.querySelector('.add-btn');
+      if(btn) btn.click();
+    }
+  });
+
+  // ── 朝聖之路互動地圖(Leaflet + OpenStreetMap) ──
+  function buildCaminoMap(elId, stops, lineColor){
+    const map = L.map(elId, {scrollWheelZoom:false});
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17, attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    const latlngs = stops.map(s=>[s.lat,s.lng]);
+    L.polyline(latlngs, {color:lineColor, weight:4, opacity:.75, dashArray:'2 8'}).addTo(map);
+    stops.forEach((s,i)=>{
+      const isEnd = i===stops.length-1, isStart = i===0;
+      const m = L.circleMarker([s.lat,s.lng], {
+        radius: (isStart||isEnd)?9:7,
+        color:'#16406e', weight:2,
+        fillColor: isEnd ? '#8e2f4a' : (isStart ? '#2f7a55' : '#dda512'),
+        fillOpacity:.95
+      }).addTo(map);
+      m.bindPopup('<b>'+s.name+'</b><br>'+s.info);
+    });
+    const b = L.latLngBounds(latlngs);
+    map.fitBounds(b, {padding:[24,24]});
+    return [map, b];
+  }
+  try{
+    const stopsB = [
+      {name:'Tui（起點）', lat:42.0470, lng:-8.6444, info:'D5・3/31 抵達・大教堂領朝聖護照，傍晚跨橋到葡萄牙'},
+      {name:'O Porriño', lat:42.1615, lng:-8.6199, info:'D6・4/1｜第1天 約16km，輕鬆開始'},
+      {name:'Redondela', lat:42.2839, lng:-8.6096, info:'D7・4/2｜第2天 約15km，第一次遠眺維哥灣'},
+      {name:'Arcade（午餐）', lat:42.3390, lng:-8.6150, info:'D8 途中｜生蠔之鄉＋Ponte Sampaio 石橋'},
+      {name:'Pontevedra', lat:42.4310, lng:-8.6444, info:'D8・4/3｜第3天 19km，最美行人化老城'},
+      {name:'Caldas de Reis', lat:42.6040, lng:-8.6417, info:'D9・4/4｜第4天 21km，露天溫泉足湯'},
+      {name:'Padrón', lat:42.7380, lng:-8.6607, info:'D10・4/5｜第5天 19km，炸青椒原產地'},
+      {name:'Santiago de Compostela 🎉', lat:42.8807, lng:-8.5444, info:'D11・4/6｜第6天 25km，Obradoiro 廣場領證書'}
+    ];
+    buildCaminoMap('mapB', stopsB, '#5b3a8e');
+
+    // ── 朝聖路網總覽圖 ──
+    const ov = L.map('mapOverview', {scrollWheelZoom:false});
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:12, attribution:'&copy; OpenStreetMap contributors'}).addTo(ov);
+    const SDC=[42.881,-8.544];
+    function route(pts, color, name, opts){
+      const o = Object.assign({color:color, weight:2.5, opacity:.8, dashArray:'3 7'}, opts||{});
+      L.polyline(pts, o).addTo(ov).bindPopup('<b>'+name+'</b>');
+    }
+    // 各主要路線(示意)
+    route([[43.163,-1.237],[42.817,-1.644],[42.466,-2.449],[42.344,-3.697],[42.599,-5.567],[42.546,-6.59],[42.777,-7.414],SDC], '#8e2f4a', '法國之路 Camino Francés（全程約 780km，聖讓皮耶德波爾起）');
+    route([[38.72,-9.14],[40.21,-8.43],[41.15,-8.61],[42.047,-8.644],[42.431,-8.644],SDC], '#5b3a8e', '葡萄牙之路 Camino Portugués（里斯本／波多起）');
+    route([[43.34,-1.79],[43.32,-1.98],[43.263,-2.935],[43.463,-3.805],[43.545,-5.662],[43.535,-7.04],SDC], '#2a4a9e', '北方之路 Camino del Norte（沿比斯開灣）');
+    route([[43.362,-5.849],[43.01,-7.556],SDC], '#1f7d8c', '原始之路 Camino Primitivo（最古老，奧維耶多起）');
+    route([[43.484,-8.233],SDC], '#2f7a55', '英國之路 Camino Inglés（費羅爾起）');
+    route([[37.389,-5.984],[38.916,-6.344],[40.965,-5.664],[42.336,-7.864],SDC], '#3a8fb5', '銀之路 Vía de la Plata（塞維亞起，最長）');
+    // 你們的兩個候選段:加粗實線
+    route([[42.047,-8.644],[42.284,-8.61],[42.431,-8.644],[42.604,-8.642],[42.738,-8.661],SDC], '#5b3a8e', '⭐ 你的路線：Tui → Santiago（115km／5天）', {weight:6, opacity:.95, dashArray:null});
+    // 世界盡頭延伸
+    route([SDC,[42.907,-9.263]], '#c9538a', '世界盡頭之路 Santiago → Finisterre（4/7 一日遊前往）', {weight:3.5, dashArray:'1 6'});
+    // 城市標記
+    const city=(ll,name,info,color,r2)=>L.circleMarker(ll,{radius:r2||5,color:'#16406e',weight:1.5,fillColor:color||'#dda512',fillOpacity:.95}).addTo(ov).bindPopup('<b>'+name+'</b><br>'+info);
+    city(SDC,'Santiago de Compostela','所有路線的終點・大教堂與朝聖者辦公室','#8e2f4a',9);
+    city([41.404,2.174],'巴塞隆納','你的 D1–D4・高第建築');
+    city([40.417,-3.703],'馬德里','你的 D13–D15・藝術收尾');
+    city([42.047,-8.644],'Tui','你的起點（葡西邊境）・3/31 抵達領朝聖護照','#2f7a55',7);
+    city([42.907,-9.263],'Finisterre','世界盡頭・0.0km','#c9538a',6);
+    ov.fitBounds(L.latLngBounds([[36.9,-9.6],[43.8,3.4]]), {padding:[10,10]});
+  }catch(e){ console.error('map init', e); }
+
+
+  loadCustomItems();
+</script>
+</body>
+</html>

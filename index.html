@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【10天】名古屋．上高地．黑部立山．北陸秋季壯遊</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2b3f; --ink-2:#111c2b;
+    --paper:#f6efe0; --paper-2:#efe6d2;
+    --maple:#b1401c; --maple-2:#8f3117;
+    --gold:#c99a3e;
+    --pine:#3d5a49; --pine-2:#2c4336;
+    --slate:#3d5b73; --slate-2:#2c4152;
+    --text:#2a241d; --text-soft:#5c5348;
+    --line:#d8cdb3;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--text); font-family:'Noto Sans TC', sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Noto Serif TC', serif; margin:0;}
+  .mono{font-family:'Space Mono', monospace;}
+
+  /* NAV */
+  .topnav{position:sticky; top:0; z-index:100; background:rgba(17,28,43,.96); backdrop-filter:blur(8px); border-bottom:1px solid rgba(201,154,62,.3); display:flex; align-items:center; gap:0; overflow-x:auto; padding:0 16px;}
+  .topnav a{font-family:'Space Mono', monospace; font-size:11.5px; color:#9fb0c2; text-decoration:none; padding:12px 14px; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s, border-color .2s;}
+  .topnav a:hover{color:#e3c37a; border-bottom-color:#c99a3e;}
+
+  /* HERO */
+  .hero{position:relative; background:linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 65%, #24384f 100%); color:var(--paper); padding:64px 24px 40px; overflow:hidden; text-align:center;}
+  .stars{position:absolute; inset:0; overflow:hidden;}
+  .star{position:absolute; width:2px; height:2px; background:#fff; border-radius:50%; opacity:.7; animation:twinkle 3.4s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15;} 50%{opacity:.95;}}
+  .leaf{position:absolute; top:-30px; font-size:20px; opacity:.85; animation:fall linear infinite; z-index:1;}
+  @keyframes fall{0%{transform:translateY(-10%) rotate(0deg); opacity:.9;} 100%{transform:translateY(560px) rotate(340deg); opacity:0;}}
+  .eyebrow{font-family:'Space Mono', monospace; letter-spacing:.24em; font-size:12px; color:#e3c37a; text-transform:uppercase; margin-bottom:16px; position:relative;}
+  .hero h1{font-size:clamp(23px, 5vw, 38px); font-weight:900; line-height:1.4; text-shadow:0 2px 18px rgba(0,0,0,.35); position:relative;}
+  .hero p.sub{margin-top:14px; font-size:14.5px; color:#cdd8e3; position:relative;}
+  .hero .route-caption{margin-top:20px; font-size:12px; color:#9fb0c2; font-family:'Space Mono', monospace; line-height:1.9; max-width:600px; margin-left:auto; margin-right:auto; position:relative;}
+
+  .mapbox{position:relative; max-width:900px; margin:28px auto 0; border:1px solid rgba(227,195,122,.35); border-radius:8px; overflow:hidden; box-shadow:0 14px 40px rgba(0,0,0,.35);}
+  .mapbox iframe{display:block; width:100%; height:380px; border:0;}
+  .mapbox .maplink{position:absolute; right:10px; bottom:10px; background:rgba(17,28,43,.88); color:#e3c37a; font-family:'Space Mono', monospace; font-size:11.5px; padding:6px 12px; border-radius:18px; text-decoration:none; border:1px solid rgba(227,195,122,.4);}
+
+  .flights{display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:900px; margin:18px auto 8px; position:relative;}
+  .flight{background:rgba(255,255,255,.06); border:1px solid rgba(227,195,122,.28); border-radius:8px; padding:16px 18px; text-align:left; backdrop-filter:blur(2px);}
+  .flight .fl-head{display:flex; justify-content:space-between; align-items:baseline; font-family:'Space Mono', monospace;}
+  .flight .fl-no{font-size:15px; font-weight:700; color:#e3c37a;}
+  .flight .fl-date{font-size:11.5px; color:#9fb0c2;}
+  .flight .fl-route{display:flex; align-items:center; gap:10px; margin-top:12px;}
+  .flight .apt{flex:1;}
+  .flight .apt .code{font-family:'Noto Serif TC', serif; font-weight:900; font-size:22px; color:var(--paper); line-height:1.2;}
+  .flight .apt .time{font-family:'Space Mono', monospace; font-size:14px; color:#e3c37a; margin-top:2px;}
+  .flight .apt .term{font-size:11px; color:#9fb0c2; margin-top:2px;}
+  .flight .apt.arr{text-align:right;}
+  .flight .fl-line{flex:1.1; position:relative; height:2px; background:repeating-linear-gradient(90deg,#c99a3e 0,#c99a3e 5px,transparent 5px,transparent 10px); min-width:60px;}
+  .flight .fl-line::after{content:"✈"; position:absolute; top:-11px; left:50%; transform:translateX(-50%); color:#e3c37a; font-size:14px;}
+  .flight .fl-meta{margin-top:10px; font-size:11.5px; color:#9fb0c2; font-family:'Space Mono', monospace;}
+
+  /* WRAP */
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+
+  /* TICKET ALERT */
+  .ticket-alert{background:#fff; border:2px solid var(--maple); border-radius:8px; padding:22px 24px 20px; margin:40px auto 20px; position:relative; box-shadow:0 10px 30px rgba(143,49,23,.15); font-size:14.5px; line-height:1.9;}
+  .ticket-alert::before{content:"⚠ 立山黑部車票・最重要提醒"; position:absolute; top:-14px; left:20px; background:var(--maple); color:#fff; font-family:'Noto Serif TC', serif; font-weight:700; font-size:13px; letter-spacing:.08em; padding:4px 14px; border-radius:3px;}
+  .ticket-alert .big-date{font-family:'Space Mono', monospace; background:var(--paper-2); border:1px dashed var(--gold); border-radius:6px; padding:12px 16px; margin:12px 0; font-size:14px;}
+  .ticket-alert .big-date b{color:var(--maple-2); font-size:16px;}
+  .ticket-alert a{color:var(--slate); font-weight:700;}
+  .ticket-alert ul{margin:8px 0 0; padding-left:20px;}
+  .ticket-alert li{margin-bottom:6px;}
+  .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .btn{display:inline-block; font-family:'Space Mono', monospace; font-size:12.5px; padding:9px 16px; border-radius:22px; text-decoration:none; border:1.5px solid var(--maple); color:#fff; background:var(--maple);}
+  .btn.ghost{background:transparent; color:var(--maple-2);}
+  .btn.pine{background:var(--pine); border-color:var(--pine); color:#fff;}
+  .btn.slate{background:var(--slate); border-color:var(--slate); color:#fff;}
+
+  .notice{background:var(--paper-2); border:1px solid var(--line); border-radius:2px; padding:18px 22px; margin:20px auto 30px; position:relative; font-size:14px; line-height:1.85;}
+  .notice::before{content:"行李與交通"; position:absolute; top:-13px; left:22px; background:var(--pine); color:#fff; font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.1em; padding:4px 10px; border-radius:2px;}
+  .notice b{color:var(--pine-2);}
+
+  /* CHECKLIST */
+  .checklist-wrap{background:#fff; border:1px solid var(--line); border-radius:8px; padding:24px 26px; margin:0 auto 30px; box-shadow:0 4px 18px rgba(28,43,63,.06);}
+  .checklist-wrap h3{font-size:16px; color:var(--ink); margin-bottom:16px; display:flex; align-items:center; gap:8px;}
+  .cl-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .cl-block h4{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.12em; color:var(--text-soft); margin:0 0 10px; text-transform:uppercase;}
+  .cl-item{display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; font-size:13.5px; line-height:1.6;}
+  .cl-item input[type=checkbox]{margin-top:3px; accent-color:var(--pine); flex-shrink:0; width:15px; height:15px;}
+  .cl-item label{cursor:pointer;}
+  .cl-item.urgent label{color:var(--maple-2); font-weight:700;}
+  .cl-item a{color:var(--slate);}
+
+  /* WEATHER */
+  .weather-wrap{background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin:0 auto 30px; box-shadow:0 4px 18px rgba(28,43,63,.06);}
+  .weather-wrap h3{font-size:16px; color:var(--ink); margin-bottom:14px;}
+  .weather-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .weather-table th{font-family:'Space Mono', monospace; font-size:11px; text-align:left; color:var(--text-soft); padding:6px 10px; border-bottom:2px solid var(--line);}
+  .weather-table td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  .weather-table tr:last-child td{border-bottom:none;}
+  .weather-table .loc{font-weight:700; color:var(--ink);}
+  .weather-table .day-temp{color:var(--maple-2); font-family:'Space Mono', monospace; font-weight:700;}
+  .weather-table .night-temp{color:var(--slate); font-family:'Space Mono', monospace;}
+  .weather-table .tip{font-size:12px; color:var(--text-soft);}
+  .temp-bar{display:inline-block; height:6px; border-radius:3px; background:linear-gradient(90deg,var(--slate),var(--maple)); vertical-align:middle; margin-left:6px; opacity:.6;}
+
+  /* PACKING */
+  .pack-wrap{background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin:0 auto 40px; box-shadow:0 4px 18px rgba(28,43,63,.06);}
+  .pack-wrap h3{font-size:16px; color:var(--ink); margin-bottom:16px;}
+  .pack-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .pack-block h4{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.12em; color:var(--text-soft); margin:0 0 10px; text-transform:uppercase;}
+  .pack-item{display:flex; align-items:flex-start; gap:8px; margin-bottom:7px; font-size:13.5px; line-height:1.5;}
+  .pack-item input[type=checkbox]{margin-top:3px; accent-color:var(--pine); flex-shrink:0; width:14px; height:14px;}
+  .pack-item label{cursor:pointer;}
+  .pack-item.key label{color:var(--maple-2); font-weight:700;}
+
+  /* CHAPTER / TIMELINE */
+  .chapter{display:flex; align-items:center; gap:12px; margin:38px 0 14px; color:var(--text-soft);}
+  .chapter .num{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.15em; background:var(--ink); color:var(--paper); padding:3px 9px; border-radius:2px;}
+  .chapter .ln{flex:1; height:1px; background:var(--line);}
+  .chapter .lbl{font-family:'Noto Serif TC', serif; font-weight:700; font-size:14px; color:var(--text);}
+  .timeline{position:relative; padding:0 0 30px;}
+  .rail{position:absolute; left:29px; top:6px; height:calc(100% - 36px); width:2px; background:repeating-linear-gradient(180deg, var(--gold) 0, var(--gold) 6px, transparent 6px, transparent 12px);}
+  .day{position:relative; padding-left:70px; margin-bottom:26px;}
+  .marker{position:absolute; left:0; top:2px; width:60px; height:60px; border-radius:50%; background:var(--paper); border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; flex-direction:column;}
+  .marker .d{font-family:'Space Mono', monospace; font-size:10px; color:var(--text-soft); letter-spacing:.05em;}
+  .marker svg{width:22px; height:22px; margin-top:1px;}
+  .card{background:#fff; border-radius:6px; border:1px solid var(--line); box-shadow:0 3px 14px rgba(28,43,63,.06); overflow:hidden;}
+  .card-head{padding:16px 20px 14px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; border-bottom:1px dashed var(--line);}
+  .card-head h2{font-size:16.5px; line-height:1.5; color:var(--ink);}
+  .stay-tag{font-family:'Space Mono', monospace; font-size:11.5px; white-space:nowrap; background:var(--paper-2); color:var(--pine-2); border:1px solid var(--line); padding:4px 9px; border-radius:20px;}
+  .stay-tag a{color:inherit; text-decoration:underline;}
+  .card-body{padding:16px 20px 18px;}
+  .row{display:flex; gap:14px; font-size:14px; line-height:1.8; margin-bottom:10px;}
+  .row:last-child{margin-bottom:0;}
+  .row .label{flex:0 0 64px; font-size:12px; font-family:'Space Mono', monospace; color:#9c8f78; padding-top:2px;}
+  .row .val{flex:1; color:var(--text);}
+  .hl{color:var(--maple-2); font-weight:700;}
+
+  details.more{margin-top:12px; border-top:1px dashed var(--line); padding-top:2px;}
+  details.more summary{cursor:pointer; list-style:none; font-family:'Space Mono', monospace; font-size:12px; color:var(--slate); padding:10px 0 4px; user-select:none; display:flex; align-items:center; gap:8px;}
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{content:"▸"; transition:transform .2s; color:var(--gold);}
+  details.more[open] summary::before{transform:rotate(90deg);}
+  details.more .inner{padding:8px 2px 6px; font-size:13.5px; line-height:1.9; color:var(--text);}
+  .opts{display:flex; flex-direction:column; gap:8px; margin-top:4px;}
+  .opt{border:1px dashed var(--line); border-radius:4px; padding:8px 12px; font-size:13.5px; background:var(--paper-2);}
+  .opt b{color:var(--ink);}
+  .opt a{color:var(--slate);}
+
+  /* BUS TIMETABLE */
+  .bus-box{background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:14px 14px 10px; margin:10px 0;}
+  .bus-box .bus-title{font-family:'Space Mono', monospace; font-size:11px; color:var(--text-soft); letter-spacing:.08em; margin-bottom:8px;}
+  .bus-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  .bus-table th{font-family:'Space Mono', monospace; font-size:10.5px; color:var(--text-soft); text-align:center; padding:4px 6px; border-bottom:1px solid var(--line); background:rgba(255,255,255,.5);}
+  .bus-table td{text-align:center; padding:5px 6px; border-bottom:1px solid rgba(216,205,179,.4); font-family:'Space Mono', monospace; font-size:12px;}
+  .bus-table td.rec{color:var(--maple-2); font-weight:700;}
+  .bus-table tr:last-child td{border-bottom:none;}
+  .bus-note{font-size:11.5px; color:var(--text-soft); margin-top:6px;}
+
+  /* RELAY */
+  .relay{background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:16px 16px 10px; margin:12px 0 6px;}
+  .relay .rl-title{font-family:'Space Mono', monospace; font-size:11px; color:var(--text-soft); letter-spacing:.08em; margin-bottom:10px;}
+  .rl-item{display:flex; align-items:flex-start; gap:12px; position:relative; padding-bottom:18px;}
+  .rl-item:last-child{padding-bottom:0;}
+  .rl-item::before{content:""; position:absolute; left:17px; top:38px; bottom:-2px; width:2px; background:repeating-linear-gradient(180deg,var(--gold) 0,var(--gold) 4px,transparent 4px,transparent 8px);}
+  .rl-item:last-child::before{display:none;}
+  .rl-icon{flex:0 0 36px; width:36px; height:36px; border-radius:50%; background:#fff; border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center;}
+  .rl-icon svg{width:18px; height:18px; stroke:var(--ink);}
+  .rl-icon.peak{background:var(--ink); border-color:var(--ink);}
+  .rl-icon.peak svg{stroke:var(--paper);}
+  .rl-body{flex:1; padding-top:3px;}
+  .rl-mode{font-size:13px; font-weight:700; color:var(--ink);}
+  .rl-time{font-family:'Space Mono', monospace; font-size:11.5px; color:var(--maple-2);}
+  .rl-note{font-size:12px; color:var(--text-soft); margin-top:2px;}
+
+  .sched{width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:13px;}
+  .sched td{padding:5px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .sched td:first-child{font-family:'Space Mono', monospace; color:var(--maple-2); font-weight:700; width:58px; white-space:nowrap;}
+  .sched tr:last-child td{border-bottom:none;}
+
+  .seg{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:8px 0 4px;}
+  .seg .stop{font-size:12px; background:var(--paper-2); border:1px solid var(--line); border-radius:14px; padding:3px 10px; white-space:nowrap;}
+  .seg .stop.peak{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .seg .via{font-size:10.5px; color:var(--maple-2); font-family:'Space Mono', monospace; white-space:nowrap; display:flex; flex-direction:column; align-items:center; line-height:1.3;}
+  .seg .via::after{content:"→"; color:var(--gold); font-size:13px;}
+
+  .suica{display:inline-flex; align-items:center; gap:3px; font-family:'Space Mono', monospace; font-size:10.5px; padding:2px 7px; border-radius:10px; white-space:nowrap; vertical-align:middle; margin-left:4px;}
+  .suica.ok{background:#e8f4e8; color:#2c6e2c; border:1px solid #a8d4a8;}
+  .suica.ng{background:#fce8e8; color:#8f2020; border:1px solid #f0b8b8;}
+  .suica.cash{background:#fff8e6; color:#7a5a10; border:1px solid #e6cf85;}
+  .confirm-tag{font-family:'Space Mono', monospace; font-size:11px; background:#e6f0e8; color:var(--pine-2); border:1px solid #b9d4bf; padding:3px 8px; border-radius:20px;}
+  .day.nagoya .marker{border-color:var(--slate);}
+  .day.hike .marker{border-color:var(--pine);}
+  .day.rest .marker{border-color:#9aa6b2;}
+  .day.alpine .marker{background:var(--ink); border-color:var(--gold);}
+  .day.alpine .marker svg{stroke:var(--paper);}
+  .day.alpine .marker .d{color:#dcc998;}
+  .day.city .marker{border-color:var(--gold);}
+  .day.toyama .marker{border-color:var(--maple);}
+  .day.home .marker{background:var(--ink); border-color:var(--gold);}
+  .day.home .marker svg{stroke:var(--paper);}
+  .day.home .marker .d{color:#dcc998;}
+  .day.alpine .card-head{background:linear-gradient(90deg, #f3ecdc, #fff);}
+  .day.toyama .stay-tag{background:#f8e8de; color:var(--maple-2); border-color:#e6c3ae;}
+  .day.hike .stay-tag{background:#e9f0ea; color:var(--pine-2); border-color:#cddccf;}
+  .day.nagoya .stay-tag{background:#e9eff2; color:var(--slate-2); border-color:#c9d6dd;}
+
+  .todo-box{background:linear-gradient(135deg,#fff8e8,#fdf1d6); border:1.5px solid var(--gold); border-left:5px solid var(--gold); border-radius:6px; padding:14px 16px 13px; margin:14px 0 2px; position:relative; box-shadow:0 2px 10px rgba(201,154,62,.15);}
+  .todo-box .todo-title{display:flex; align-items:center; gap:7px; font-family:'Noto Serif TC',serif; font-weight:700; font-size:14px; color:var(--maple-2); margin-bottom:7px;}
+  .todo-box .todo-body{font-size:13.5px; line-height:1.85; color:var(--text);}
+  .todo-box .todo-body b{color:var(--ink);}
+
+  .add-item-row{display:flex; gap:6px; margin-top:8px; padding-top:8px; border-top:1px dashed var(--line);}
+  .add-input{flex:1; border:1px solid var(--line); border-radius:6px; padding:6px 10px; font-size:13px; font-family:'Noto Sans TC', sans-serif; background:var(--paper-2); color:var(--text); outline:none;}
+  .add-input:focus{border-color:var(--gold); background:#fff;}
+  .add-btn{flex:0 0 32px; height:32px; border:1.5px solid var(--pine); border-radius:6px; background:transparent; color:var(--pine-2); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; transition:background .15s;}
+  .add-btn:hover{background:var(--pine); color:#fff;}
+  .custom-list{min-height:0;}
+  .del-btn{background:none; border:none; color:#c4a48a; cursor:pointer; font-size:13px; padding:0 2px; margin-left:4px; opacity:.5; transition:opacity .15s; vertical-align:middle;}
+  .del-btn:hover{opacity:1; color:var(--maple);}
+
+  footer{text-align:center; padding:36px 20px 60px; color:var(--text-soft); font-size:12.5px; font-family:'Space Mono', monospace; letter-spacing:.04em; line-height:2;}
+  footer a{color:var(--slate); text-decoration:underline;}
+
+  @media (max-width:640px){
+    .flights{grid-template-columns:1fr;}
+    .mapbox iframe{height:280px;}
+    .marker{width:52px; height:52px;}
+    .rail{left:25px;}
+    .day{padding-left:62px;}
+    .cl-grid,.pack-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="#checklist">✅ 行前準備</a>
+  <a href="#weather">🌡 天氣</a>
+  <a href="#packing">🎒 行李</a>
+  <a href="#ticket">🎟 立山票</a>
+  <a href="#ch1">CH.1 名古屋</a>
+  <a href="#ch2">CH.2 高山・上高地</a>
+  <a href="#ch3">CH.3 黑部立山</a>
+  <a href="#ch4">CH.4 金澤・富山</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars" id="stars"></div>
+  <span class="leaf" style="left:10%; animation-duration:9s;">🍁</span>
+  <span class="leaf" style="left:32%; animation-duration:11s; animation-delay:2s;">🍁</span>
+  <span class="leaf" style="left:58%; animation-duration:8s; animation-delay:1s;">🍁</span>
+  <span class="leaf" style="left:82%; animation-duration:12s; animation-delay:3.5s;">🍁</span>
+  <div class="eyebrow">2026/10/03 — 10/12 · 十天九夜</div>
+  <h1>名古屋．上高地．黑部立山．北陸秋季壯遊</h1>
+  <p class="sub">從名古屋出發，穿越飛驒高山、神域上高地，翻越阿爾卑斯山脈直抵室堂，再收進金澤與富山灣海岸線</p>
+  <p class="route-caption">名古屋 → 高山 → 上高地 → 大町溫泉 → 立山黑部 → 金澤 → 富山</p>
+  <div class="mapbox">
+    <iframe src="https://www.google.com/maps/d/embed?mid=1c7FprLh49-LMdUo0NKB70bOEHC12rI0&ll=36.55%2C137.4&z=8" loading="lazy" title="行程地圖"></iframe>
+    <a class="maplink" href="https://www.google.com/maps/d/u/0/edit?mid=1c7FprLh49-LMdUo0NKB70bOEHC12rI0" target="_blank" rel="noopener">在 Google 地圖開啟 ↗</a>
+  </div>
+  <div class="flights">
+    <div class="flight">
+      <div class="fl-head"><span class="fl-no">CI150 去程</span><span class="fl-date">2026/10/03 (六)</span></div>
+      <div class="fl-route">
+        <div class="apt"><div class="code">TPE</div><div class="time">17:15</div><div class="term">桃園 T2</div></div>
+        <div class="fl-line"></div>
+        <div class="apt arr"><div class="code">NGO</div><div class="time">21:05</div><div class="term">中部國際 T1</div></div>
+      </div>
+      <div class="fl-meta">中華航空 · 飛行 02:50 · 行李 1PC</div>
+    </div>
+    <div class="flight">
+      <div class="fl-head"><span class="fl-no">CI171 回程</span><span class="fl-date">2026/10/12 (一)</span></div>
+      <div class="fl-route">
+        <div class="apt"><div class="code">TOY</div><div class="time">12:15</div><div class="term">富山</div></div>
+        <div class="fl-line"></div>
+        <div class="apt arr"><div class="code">TPE</div><div class="time">14:40</div><div class="term">桃園 T2</div></div>
+      </div>
+      <div class="fl-meta">中華航空 · 飛行 03:25 · 行李 2PC</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- CHECKLIST -->
+  <div id="checklist" style="height:1px; margin-top:36px;"></div>
+  <div class="checklist-wrap">
+    <h3>✅ 行前準備 Checklist</h3>
+    <div class="cl-grid">
+      <div class="cl-block">
+        <h4>🎟 預訂・購票</h4>
+        <div class="cl-item"><input type="checkbox" id="c_luggage"><label for="c_luggage"><b>D5（10/7）傍晚就要寄大行李</b>（營業所 08:00 才開，D6 早上來不及）— 黑貓大町營業所營業到 20:00，指定 10/9 到達</label></div>
+        <div class="cl-item"><input type="checkbox" id="c_hoteladdr"><label for="c_hoteladdr">截圖存好金澤 Neon Hotel 的日文地址＋電話（黑貓寄件單要填，訂房確認信上找）</label></div>
+        <div id="custom-booking" class="custom-list"></div>
+        <div class="add-item-row">
+          <input type="text" class="add-input" placeholder="新增自訂待辦…" data-target="custom-booking" data-prefix="cb">
+          <button class="add-btn" onclick="addCustomItem(this)">＋</button>
+        </div>
+      </div>
+      <div class="cl-block">
+        <h4>📋 文件・金錢</h4>
+        <div class="cl-item urgent"><input type="checkbox" id="c7"><label for="c7">護照有效期確認（效期需超過 2027/04）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c8"><label for="c8">旅遊保險（建議含山岳救援）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c9"><label for="c9">換日幣（建議至少 50,000 日圓現金，山區很多地方不收卡）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c10"><label for="c10">通知信用卡公司出國使用</label></div>
+        <div class="cl-item"><input type="checkbox" id="c11"><label for="c11">日本上網（SIM 卡 or eSIM，建議出發前在台灣買好）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c12"><label for="c12">下載 Google Maps 離線地圖（高山・上高地・立山・金澤・富山）</label></div>
+        <div class="cl-item"><input type="checkbox" id="c13"><label for="c13">下載 Google 翻譯日文離線包</label></div>
+        <div id="custom-docs" class="custom-list"></div>
+        <div class="add-item-row">
+          <input type="text" class="add-input" placeholder="新增自訂待辦…" data-target="custom-docs" data-prefix="cd">
+          <button class="add-btn" onclick="addCustomItem(this)">＋</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKET ALERT -->
+  <div id="ticket" style="height:1px;"></div>
+  <div class="ticket-alert" style="border-color:var(--pine);">
+    <div style="font-size:13px; color:var(--pine-2); font-weight:700; margin-bottom:6px;">✅ 兩張關鍵票券都已購買完成！</div>
+    票券實體／QR Code 保管在 <b>Emily</b> 手機，Lily 另持一張獨立的扇澤票。出發前請各自截圖存檔，山區收訊不穩。
+
+    <div class="big-date">
+      🎫 <b>立山黑部 早鳥優惠網票</b>　<span style="font-size:12px; color:var(--pine-2);">已購</span><br>
+      預訂編號 <b>L26589972</b>｜10/8（四）｜【單程】扇澤 ⇒ 電鐵富山<br>
+      <b style="color:var(--maple-2);">扇澤出發 09:00</b>　預訂人數 2（Lily 另有獨立一張）<br>
+      加購：信濃大町 → 扇澤 巴士 成人單程 ×2<br>
+      <span style="font-size:12.5px; color:var(--text-soft);">⚠ 09:00 是「扇澤站」發車時間，不是信濃大町出發時間。<br>
+      ⚠ 取票需掃 QR Code，旺季請<b>發車前 30 分抵達售票機、提前 15 分完成換票</b> → 08:30 前要到扇澤。</span>
+    </div>
+
+    <div class="big-date">
+      🎫 <b>平湯溫泉 → 松本 高速巴士</b>　<span style="font-size:12px; color:var(--pine-2);">已購</span><br>
+      車次 <b>26502　1號車</b>｜10/7（三）｜松本線/高山線<br>
+      平湯溫泉 <b style="color:var(--maple-2);">08:55</b> → 松本巴士總站（松本站前）<b style="color:var(--maple-2);">10:23</b><br>
+      座位 <b>05B / 05C / 05D</b>　大人 ×3｜訂票人 Liu JHIHYIN<br>
+      <span style="font-size:12.5px; color:var(--text-soft);">QR Code 在 Gmail 信件內，建議截圖備份。</span>
+    </div>
+
+    <div style="font-size:13px; margin-top:12px; padding-top:10px; border-top:1px dashed var(--line);">
+      <b>還沒買的：</b>D9 べるもんた 車上壽司（選配，3天前截止）。<br>
+      <b>現場買就好：</b>特急ひだ自由席（D1/D2 在名古屋站先買起來）、D4 高山→平湯、平湯→上高地往返（濃飛巴士現金購票）。
+    </div>
+  </div>
+
+  <div class="notice">
+    黑部立山全線只能搭乘接駁交通。<b>行李回送只到「電鐵富山駅」或立山山麓住宿</b>，官方沒有直送金澤的服務（1 件約 2,000 日圓，<a href="https://www.alpen-route.com/information/forwarding.html" target="_blank" rel="noopener">官方說明</a>）。D7 需先在富山領行李，再輕裝搭新幹線去金澤。
+  </div>
+
+  <!-- WEATHER -->
+  <div id="weather" style="height:1px;"></div>
+  <div class="weather-wrap">
+    <h3>🌡 逐日天氣預報（10/1 更新）</h3>
+    <div style="overflow-x:auto;">
+    <table class="weather-table" style="min-width:620px;">
+      <tr><th>日期・地點</th><th>天氣</th><th>高</th><th>低</th><th>降雨</th><th>提醒</th></tr>
+      <tr>
+        <td class="loc">D1 10/3<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">名古屋</span></td>
+        <td style="font-size:13px;">晴時多雲</td>
+        <td class="day-temp">27°</td>
+        <td class="night-temp">16°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">20%</td>
+        <td class="tip">短袖＋牛仔外套，晚上落地稍涼</td>
+      </tr>
+      <tr>
+        <td class="loc">D2 10/4<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">名古屋</span></td>
+        <td style="font-size:13px;">多雲時晴</td>
+        <td class="day-temp">24°</td>
+        <td class="night-temp">18°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">40%</td>
+        <td class="tip">帶折傘；下午榮都在室內</td>
+      </tr>
+      <tr>
+        <td class="loc">D3 10/5<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">高山</span></td>
+        <td style="font-size:13px;">陰，一時有雨</td>
+        <td class="day-temp">21°</td>
+        <td class="night-temp">13°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;"><b style="color:var(--maple-2);">80%</b></td>
+        <td class="tip">老街要帶傘，早晚涼</td>
+      </tr>
+      <tr>
+        <td class="loc">D4 10/6<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">上高地</span></td>
+        <td style="font-size:13px;">晴轉陰（預報分歧）</td>
+        <td class="day-temp">23°</td>
+        <td class="night-temp">15°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">40–90%</td>
+        <td class="tip">GTX 必帶；<b>10/4 再確認</b></td>
+      </tr>
+      <tr>
+        <td class="loc">D5 10/7<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">信濃大町</span></td>
+        <td style="font-size:13px;">陰</td>
+        <td class="day-temp">約 20°</td>
+        <td class="night-temp">14°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">30–40%</td>
+        <td class="tip">移動日，Fuego 可穿可脫</td>
+      </tr>
+      <tr>
+        <td class="loc"><b style="color:var(--maple-2);">D6 10/8</b><br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);"><b style="color:var(--maple-2);">立山・室堂</b></span></td>
+        <td style="font-size:13px;"><b>陰轉晴</b></td>
+        <td class="day-temp"><b>約 8–12</b>°</td>
+        <td class="night-temp"><b>0–5</b>°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">30%</td>
+        <td class="tip"><b style="color:var(--maple-2);">GTX＋輕羽絨＋毛帽＋手套</b>，風大體感更低</td>
+      </tr>
+      <tr>
+        <td class="loc">D7 10/9<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">室堂→金澤</span></td>
+        <td style="font-size:13px;">晴一時雨</td>
+        <td class="day-temp">室堂 ~10／金澤 23°</td>
+        <td class="night-temp">13°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">50%</td>
+        <td class="tip">清晨一之越最冷，下山後脫層</td>
+      </tr>
+      <tr>
+        <td class="loc">D8 10/10<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">金澤</span></td>
+        <td style="font-size:13px;">晴</td>
+        <td class="day-temp">24°</td>
+        <td class="night-temp">15°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">10%</td>
+        <td class="tip">單穿長袖剛好</td>
+      </tr>
+      <tr>
+        <td class="loc">D9 10/11<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">雨晴・高岡</span></td>
+        <td style="font-size:13px;">晴轉陰</td>
+        <td class="day-temp">24°</td>
+        <td class="night-temp">15°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">30%</td>
+        <td class="tip">海邊風大，帶外套</td>
+      </tr>
+      <tr>
+        <td class="loc">D10 10/12<br><span style="font-size:11.5px; font-weight:400; color:var(--text-soft);">富山→台灣</span></td>
+        <td style="font-size:13px;">多雲時晴</td>
+        <td class="day-temp">23°</td>
+        <td class="night-temp">15°</td>
+        <td style="font-size:12.5px; font-family:'Space Mono',monospace;">20%</td>
+        <td class="tip">落地桃園約 30°C</td>
+      </tr>
+    </table>
+    </div>
+    <div style="font-size:12px; color:var(--text-soft); margin-top:10px; line-height:1.8;">※ 日本氣象協會 tenki.jp 10/1 發布。今年秋天<b>比歷年平均偏暖 3–5°C</b>，平地短袖就夠，但山上的保暖裝備不能省。<br>※ 室堂（2,450m）無逐日預報，以平地氣溫換算估計。10/6 以後的預報可信度較低，<b>10/3、10/5 再各查一次</b>。</div>
+
+    <div style="margin-top:18px; padding-top:16px; border-top:1px dashed var(--line);">
+      <h3 style="font-size:15px; margin-bottom:12px;">🍁 紅葉時程（官方 9/18 更新）</h3>
+      <table class="weather-table">
+        <tr><th>地點</th><th>狀態</th><th>你們抵達日</th></tr>
+        <tr>
+          <td class="loc" style="color:var(--maple-2); font-weight:900;">室堂平 D6</td>
+          <td style="font-size:13px;">9/21 起轉色<br><b style="color:var(--maple-2);">10/4 起進入見頃</b></td>
+          <td class="tip"><b style="color:var(--maple-2);">10/8 正好在見頃期！</b>七竈轉紅、草紅葉金黃，配立山連峰</td>
+        </tr>
+        <tr>
+          <td class="loc">上高地 D4</td>
+          <td style="font-size:13px;">楓葉類 10月上旬～中旬<br>落葉松黃葉 10月下旬起</td>
+          <td class="tip">10/6 為轉色初期，大正池枯木＋穗高連峰仍是招牌畫面</td>
+        </tr>
+        <tr>
+          <td class="loc">黑部水庫・大觀峰 D6</td>
+          <td style="font-size:13px;">10月中旬前後</td>
+          <td class="tip">索道下方的タンボ平是絕景，10/8 應可見部分轉色</td>
+        </tr>
+        <tr>
+          <td class="loc">稱名滝・美女平 D7</td>
+          <td style="font-size:13px;">10月下旬～11月上旬</td>
+          <td class="tip">10/9 尚早，但瀑布本身（落差 350m）氣勢不受影響</td>
+        </tr>
+      </table>
+      <div style="font-size:12px; color:var(--text-soft); margin-top:10px;">
+        ⚠ 氣象協會預測今年秋季氣溫偏高，紅葉可能略為延後。出發前一週查 <a href="https://www.alpen-route.com/autumn-leaves/" target="_blank" rel="noopener">立山黑部官方紅葉情報</a>（9–11月每週更新）確認實際色況。<br>
+        ❄ 室堂近年初雪：10/5、10/6、10/17、10/27 — <b>10/8 有機會遇上紅葉＋初雪同框的奇景</b>，但也要有雪地防滑的心理準備。
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKING -->
+  <div id="packing" style="height:1px;"></div>
+  <div class="pack-wrap">
+    <h3>🎒 行李清單</h3>
+    <div class="pack-grid">
+      <div>
+        <div class="pack-block">
+          <h4>📄 文件・3C</h4>
+          <div class="pack-item key"><input type="checkbox" id="p1"><label for="p1">護照</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p2"><label for="p2">信用卡（最少兩張）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p3"><label for="p3">日幣現金</label></div>
+          <div class="pack-item"><input type="checkbox" id="p4"><label for="p4">手機＋充電線</label></div>
+          <div class="pack-item"><input type="checkbox" id="p5"><label for="p5">行動電源</label></div>
+          <div class="pack-item"><input type="checkbox" id="p6"><label for="p6">日本 SIM 卡 / eSIM</label></div>
+          <div class="pack-item"><input type="checkbox" id="p7"><label for="p7">相機（選配）</label></div>
+          <div id="custom-p-doc" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-doc" data-prefix="pd"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+        <div class="pack-block" style="margin-top:16px;">
+          <h4>👕 衣物</h4>
+          <div class="pack-item"><input type="checkbox" id="p8"><label for="p8">T恤 × 3–4</label></div>
+          <div class="pack-item"><input type="checkbox" id="p9"><label for="p9">薄毛衣 / 刷毛中層 × 2</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p10"><label for="p10">防風防水外套（室堂 0°C 必備）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p11"><label for="p11">長褲 × 2（健行建議快乾）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p12"><label for="p12">內衣褲 × 5–6</label></div>
+          <div class="pack-item"><input type="checkbox" id="p13"><label for="p13">薄睡褲</label></div>
+          <div id="custom-p-cloth" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-cloth" data-prefix="pc"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+      </div>
+      <div>
+        <div class="pack-block">
+          <h4>🥾 山區必備</h4>
+          <div class="pack-item key"><input type="checkbox" id="p14"><label for="p14">毛帽＋手套（室堂 0°C 必備）</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p15"><label for="p15">健行鞋（有防滑底，勿穿球鞋）</label></div>
+          <div class="pack-item key"><input type="checkbox" id="p_headlamp"><label for="p_headlamp">頭燈（天狗平山莊清晨看雲海、夜間上廁所必備）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p16"><label for="p16">輕量雨衣 / 雨傘（山區天氣多變）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p17"><label for="p17">頸圍 / 薄圍巾</label></div>
+          <div class="pack-item"><input type="checkbox" id="p18"><label for="p18">隨身小背包（立山全線輕裝用）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p19"><label for="p19">保溫瓶（山上補充熱飲）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p20"><label for="p20">防曬乳 SPF50（高海拔紫外線強）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p21"><label for="p21">頭痛藥（天狗平 2300m 高山症預防）</label></div>
+          <div id="custom-p-mountain" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-mountain" data-prefix="pm"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+        <div class="pack-block" style="margin-top:16px;">
+          <h4>🧴 日用</h4>
+          <div class="pack-item"><input type="checkbox" id="p22"><label for="p22">盥洗用品（旅館通常有提供）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p23"><label for="p23">個人藥品（腸胃藥、感冒藥）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p24"><label for="p24">環保購物袋（日本超市要收費）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p25"><label for="p25">耳塞（旅館可能有隔音問題）</label></div>
+          <div class="pack-item"><input type="checkbox" id="p26"><label for="p26">溫泉毛巾（湯元館可能有，確認一下）</label></div>
+          <div id="custom-p-daily" class="custom-list"></div>
+          <div class="add-item-row"><input type="text" class="add-input" placeholder="新增…" data-target="custom-p-daily" data-prefix="pu"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CH1 -->
+  <div id="ch1"></div>
+  <div class="chapter"><span class="num">CH.1</span><span class="ln"></span><span class="lbl">名古屋起點</span></div>
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D1 -->
+    <div class="day nagoya">
+      <div class="marker"><span class="d mono">D1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 13l7-1 4-6 2 1-2.5 5.5 6-.5 1.5 2-6.5 2.5.5 5-2 1-2-4.5-4.5 3-1.5-1.5 3-3z" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/3 (六) 台北 → 名古屋</h2><span class="stay-tag">宿 · 名古屋 <a href="https://www.booking.com/Share-GRp55T8" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">華航 CI150（17:15 桃園 T2 → 21:05 中部國際 T1）→ 提領行李後搭名鐵特急，約 21:26–22:07 間發車，<b>40–50 分抵達名古屋站</b>，¥980 <span class="suica ok">✅ 西瓜卡可刷</span></div></div>
+          <div class="row"><div class="label">注意</div><div class="val">預計 <span class="hl">22:15–22:50 抵達旅館</span>，務必提前聯絡住宿告知晚到時間（check-in 通常到 24:00，但最好先確認）</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val">抵達後入住，晚上名古屋站地下街散步（ESCA、Gate Walk 部分店到 23:00）</div></div>
+          <div class="todo-box">
+            <div class="todo-title">📌 順手辦：買 D3 的特急ひだ車票</div>
+            <div class="todo-body">名古屋站「<b>みどりの窓口</b>」或綠色售票機，買「<b>乘車券＋自由席特急券</b>」（10/5 非全車指定席期間，有自由席免劃位）。<br>今晚太晚就明天 D2 白天再去 — 反正名古屋站會進出好幾次。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D2 -->
+    <div class="day nagoya">
+      <div class="marker"><span class="d mono">D2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="9" width="11" height="5" rx="4"/><path d="M16 10.5h2a2 2 0 0 1 0 4h-2"/><path d="M8 5s0 1.5 1 2M12 5s0 1.5 1 2"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/4 (日) 清洲城・血拼日・熱田神宮</h2><span class="stay-tag">宿 · なごのや（連住）</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">亮點</div><div class="val">「名古屋版神隱少女」清洲城紅橋、go slow caravan、榮 mont-bell／Alpen／松坂屋買登山鞋和 YONEX、黃昏熱田神宮、蓬萊軒本店鰻魚飯三吃</div></div>
+          <div class="row"><div class="label">路線</div><div class="val">西北（清洲）→ 西（名古屋站）→ 市中心（榮）→ 南（熱田），一路往下不走回頭路。磁浮鐵道館已拿掉。</div></div>
+          <div class="todo-box">
+            <div class="todo-title">📌 今天的購物順序很重要</div>
+            <div class="todo-body">
+              先去 <b>mont-bell 買羊毛襪</b> → <b>穿著羊毛襪</b>去 Alpen 試登山鞋（登山襪比較厚，用一般襪子試會買太小）。<br>
+              登山鞋首選 <b>On Cloudrock 防水版（WP）</b>，跟舊鞋同款最好磨合。<br>
+              買滿 ¥5,000 可免稅，<b>帶護照</b>。鞋盒不要帶，拆掉只放鞋。
+            </div>
+          </div>
+          <details class="more" open><summary>展開完整時間軸</summary><div class="inner">
+            <table class="sched">
+              <tr><td>08:00</td><td>住宿一樓<b>喫茶なごのや</b>早餐（玉子三明治）</td></tr>
+              <tr><td>09:00</td><td>名古屋站搭 JR 到<b>清洲站</b>（約 10 分）<span class="suica ok">✅ 西瓜卡可刷</span>，步行約 15 分</td></tr>
+              <tr><td>09:30–10:30</td><td><b>清洲城</b>：紅色大手橋＋天守閣，「千尋走向油屋」構圖 📸（紅橋免費，進天守閣要買票）</td></tr>
+              <tr><td>11:00</td><td>回名古屋站 → <b>go slow caravan</b>（ノリタケの森店，站北步行約 10–15 分）</td></tr>
+              <tr><td>12:30</td><td>名古屋站附近午餐</td></tr>
+              <tr><td>13:30</td><td>地鐵到榮：<b>mont-bell 名古屋榮店</b>（羊毛襪、WIC 長袖、清單）</td></tr>
+              <tr><td>14:30</td><td><b>Alpen NAGOYA</b>：穿羊毛襪試登山鞋（On Cloudrock WP 為主）</td></tr>
+              <tr><td>15:30</td><td><b>松坂屋名古屋店 北館 4F</b>：YONEX YY-RAFTROCKER 涼鞋</td></tr>
+              <tr><td>16:45</td><td>地鐵往熱田</td></tr>
+              <tr><td>17:00</td><td><b>熱田神宮</b>黃昏參拜（境內森林參道）</td></tr>
+              <tr><td>18:00</td><td><b>あつた蓬萊軒 本店</b>鰻魚飯三吃（週日晚上會排隊，早點去）</td></tr>
+            </table>
+            <div class="bus-note">⚠ 出發前查一下 go slow caravan 開店時間（這類店常 10–11 點才開）。預報這天可能下雨，帶折傘；下午都在室內影響不大。</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CH2 -->
+  <div id="ch2"></div>
+  <div class="chapter"><span class="num">CH.2</span><span class="ln"></span><span class="lbl">飛驒高山・神域上高地</span></div>
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D3 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="7" width="16" height="10" rx="2"/><circle cx="8.5" cy="17" r="1.6" fill="currentColor" stroke="none"/><circle cx="15.5" cy="17" r="1.6" fill="currentColor" stroke="none"/><path d="M4 11h16"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/5 (一) 名古屋 → 高山</h2><span class="stay-tag">宿 · 高山 <a href="https://www.booking.com/Share-oF2HOB" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">JR 特急「ひだ」約 2h15m（搭 <b>ひだ3 08:43</b>，10:58 抵高山）<span class="suica cash">🎫 自由席・車票 D1/D2 先買好</span></div></div>
+          <div class="row"><div class="label">搭車</div><div class="val"><b style="color:var(--maple-2);">08:15 前到月台排隊</b> — 名古屋是始發站，早點排就能三人坐一起＋搶到行李位。自由席只有 1–2 節車廂，月台地面有標示位置。</div></div>
+          <details class="more"><summary>展開ひだ班次表＋自由席說明</summary><div class="inner">
+            <div class="bus-box">
+              <div class="bus-title mono">🚄 名古屋 → 高山 特急ひだ 班次（10/5 週一）</div>
+              <table class="bus-table">
+                <tr><th>車次</th><th>名古屋發</th><th>高山抵</th><th>費時</th></tr>
+                <tr><td class="rec">ひだ3</td><td class="rec">08:43</td><td class="rec">10:58</td><td class="rec">2h15m ✈ 推薦</td></tr>
+                <tr><td>ひだ5</td><td>09:39</td><td>12:14</td><td>2h35m</td></tr>
+                <tr><td>ひだ81</td><td>10:18</td><td>13:00</td><td>2h42m</td></tr>
+                <tr><td>ひだ7</td><td>10:48</td><td>13:17</td><td>2h29m</td></tr>
+              </table>
+              <div class="bus-note">
+                ✅ <b>10/5 有自由席，不用劃位！</b>JR東海全車指定席期間為 4/24–5/6、8/7–8/16、9/18–9/23、12/25–1/5，10/5 不在其中。<br>
+                💰 自由席比指定席省約 ¥530/人（三人約省 ¥1,590）。<br>
+                🎫 買法：名古屋站みどりの窓口或綠色售票機，買「乘車券＋自由席特急券」，D1 晚上或 D2 白天先買起來放。<br>
+                ⚠ 萬一自由席客滿可站著，或當場加購指定席。10/5 是平日非連假，風險低。
+              </div>
+            </div>
+          </div></details>
+          <div class="row"><div class="label">亮點</div><div class="val">三町老街、中橋紅橋、飛驒牛握壽司、高山陣屋、酒藏試飲、飛驒牛燒肉晚餐、高山布丁</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D4 -->
+    <div class="day hike">
+      <div class="marker"><span class="d mono">D4</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18c3-2 6 2 9 0s6-2 9 0" stroke-linecap="round"/><path d="M3 13c3-2 6 2 9 0s6-2 9 0" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/6 (二) 高山 → 上高地大滿貫</h2><span class="stay-tag">宿 · 湯元館（平湯溫泉）<a href="https://www.booking.com/Share-9iomHP" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">亮點</div><div class="val">大正池、田代池、河童橋、岳澤濕原、明神橋、明神池，一泊二食溫泉收尾</div></div>
+
+          <div class="todo-box">
+            <div class="todo-title">🎫 今天要買的車票（現場現金）</div>
+            <div class="todo-body">
+              <b>① 高山巴士中心買：高山 → 平湯溫泉　單程 ¥1,500</b><br>
+              <span style="font-size:12.5px; color:var(--text-soft);">只買單程！D5 是從平湯去松本，不回高山。</span><br><br>
+              <b>② 平湯巴士總站買：平湯 ⇄ 上高地　來回 ¥2,800</b><br>
+              <span style="font-size:12.5px; color:var(--text-soft);">這段要來回（晚上回平湯住湯元館）。來回票 ¥2,800 比兩張單程 ¥3,000 省 ¥200，三人省 ¥600。</span><br><br>
+              <b style="color:var(--maple-2);">⚠ 買來回票時問一句：</b><br>
+              <span style="font-size:12.5px;">去程要在<b>大正池</b>下車（不是坐到終點），買票時確認一下可不可以：<br>
+              「<b>往復券で、行きは大正池で降りてもいいですか？</b>」<br>
+              不行的話就改買兩張單程，也只差 ¥200。</span>
+            </div>
+          </div>
+
+          <details class="more" open><summary>展開巴士班次＋健行時間軸</summary><div class="inner">
+            <div class="bus-box">
+              <div class="bus-title mono">🚌 高山 → 平湯溫泉（濃飛巴士，免預約，現場現金買票）<span class="suica ng">❌ 西瓜卡不可用</span></div>
+              <table class="bus-table">
+                <tr><th>高山濃飛巴士中心</th><th>火木平</th><th>平湯溫泉</th></tr>
+                <tr><td>06:00</td><td>★06:38</td><td>06:53</td></tr>
+                <tr><td>07:00</td><td>07:43</td><td>07:58</td></tr>
+                <tr><td>07:40</td><td>08:23</td><td>08:38</td></tr>
+                <tr><td class="rec">08:10</td><td class="rec">★08:48</td><td class="rec">09:03 ✈ 推薦</td></tr>
+                <tr><td>08:40</td><td>09:23</td><td>09:38</td></tr>
+                <tr><td>09:40</td><td>10:23</td><td>10:38</td></tr>
+              </table>
+              <div class="bus-note">★火木平僅限下客。營運時間 7/18–10/12。<br>
+              💴 <b>票價（現場買票）：</b>高山→平湯溫泉 ¥1,500｜高山→上高地（含平湯換乘）另計<br>
+              🎟 <b>你該買的票：</b>平湯溫泉→大正池 單程 <b>¥1,500</b>（上山）＋ 上高地→平湯溫泉 單程 <b>¥1,500</b>（下山），共 ¥3,000，不需要買來回票</div>
+            </div>
+            <table class="sched">
+              <tr><td>09:03</td><td>抵達平湯溫泉，步行到湯元館 check-in 寄放大行李，換上輕裝背小包出發！</td></tr>
+            </table>
+            <div class="bus-box">
+              <div class="bus-title mono">🚌 平湯溫泉 → 大正池（接駁巴士，免預約，每 30 分一班）<span class="suica ng">❌ 西瓜卡不可用・現場買票</span></div>
+              <table class="bus-table">
+                <tr><th>平湯溫泉</th><th>大正池（16分）</th><th>帝國飯店</th><th>上高地</th></tr>
+                <tr><td class="rec">09:30</td><td class="rec">09:46</td><td>09:51</td><td>09:55</td></tr>
+                <tr><td>10:00</td><td>10:16</td><td>10:21</td><td>10:25</td></tr>
+                <tr><td>10:30</td><td>10:46</td><td>10:51</td><td>10:55</td></tr>
+              </table>
+              <div class="bus-note">09:03 到平湯放行李換裝後，最早能搭 09:30 這班。每小時整點（:00）和半點（:30）出發，平湯→大正池 16 分鐘。</div>
+            </div>
+            <table class="sched">
+              <tr><td>09:46</td><td>大正池下車，健行開始：枯木倒影＋穗高連峰</td></tr>
+              <tr><td>09:46–11:15</td><td>大正池 → 田代池 → 河童橋（3.5km，平坦木棧道，約 1.5 小時）</td></tr>
+              <tr><td>11:15–12:30</td><td>河童橋午餐＋休息（河童食堂／飛驒牛可樂餅），之後補給站變少</td></tr>
+              <tr><td>12:30–13:40</td><td>河童橋 → 岳澤濕原 → 明神橋（走梓川右岸，樹根稍多）</td></tr>
+              <tr><td>13:40–14:20</td><td>明神池＋穗高神社奧宮（參拜費約 ¥500），神聖寧靜湖景</td></tr>
+              <tr><td>14:20–15:30</td><td>明神橋 → 上高地巴士總站（走梓川左岸，平坦快速）</td></tr>
+              <tr><td>15:30–17:00</td><td>在河童橋附近悠閒晃：梓川河畔野餐、咖啡、夕照穗高連峰</td></tr>
+              <tr><td>17:00</td><td>搭回程巴士（或繼續留到 17:30 最終班）</td></tr>
+              <tr><td>17:25 / 17:55</td><td>抵達平湯溫泉，回湯元館盥洗準備晚餐</td></tr>
+              <tr><td>18:00–20:00</td><td>🍱 一泊二食晚餐（湯元館）— 泡完溫泉大浴場再上桌最舒服</td></tr>
+            </table>
+            <div class="bus-box">
+              <div class="bus-title mono">🚌 上高地 → 平湯溫泉（回程）<span class="suica ng">❌ 西瓜卡不可用</span></div>
+              <table class="bus-table">
+                <tr><th>上高地</th><th>大正池</th><th>平湯溫泉</th></tr>
+                <tr><td>16:30</td><td>16:36</td><td>16:55</td></tr>
+                <tr><td class="rec">17:00</td><td class="rec">17:06</td><td class="rec">17:25</td></tr>
+                <tr><td class="rec">17:30</td><td class="rec">17:36</td><td class="rec">17:55 ✈ 最終班</td></tr>
+              </table>
+              <div class="bus-note">⚠ 17:30 是最終班，勿錯過！湯元館 check-out 10:00，行李寄存只開放 07:00–10:00。</div>
+            </div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CH3 -->
+  <div id="ch3"></div>
+  <div class="chapter"><span class="num">CH.3</span><span class="ln"></span><span class="lbl">黑部立山大橫斷</span></div>
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D5 -->
+    <div class="day rest">
+      <div class="marker"><span class="d mono">D5</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3d5a49" stroke-width="1.8"><path d="M4 20V9l8-5 8 5v11" stroke-linejoin="round"/><path d="M9 20v-6h6v6"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/7 (三) 平湯 → 信濃大町</h2><span class="stay-tag">宿 · Guest House Shinano Swee（信濃大町 JR 站旁）<a href="https://www.booking.com/Share-4fvpsn8" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">落腳</div><div class="val">今晚住<b>信濃大町 JR 站附近</b>，方便明早直接搭巴士往扇澤。</div></div>
+          <div class="todo-box">
+            <div class="todo-title">📌 今天要辦：傍晚就把大行李寄出</div>
+            <div class="todo-body"><b style="color:var(--maple-2);">⚠ 營業所 08:00 才開門，但明早 07:05 就要搭巴士往扇澤 → 一定要今天（10/7）寄出！</b><br>用<b>黑貓宅急便</b>寄到金澤，<b>指定到達日填 10/9</b>（配合飯店確認的日期，不讓行李提早一天到）。<br><span style="font-size:12.5px; color:var(--text-soft);">寄出前先把「今晚＋D6＋天狗平那晚」要用的東西全部移進背包，大箱封好再寄。</span>
+            <div class="opts" style="margin-top:6px;">
+              <div class="opt">📦 <b>黑貓宅急便</b>（ヤマト運輸）— 寄金澤，隔日達。<br><b>💴 費用（官方運賃表，長野→石川）：160 size ¥3,020，自送營業所折 ¥100 → 約 ¥2,920/件，三箱約 ¥8,760</b><br><span style="font-size:12px; color:var(--text-soft);">⚠ 超過 25kg 會跳 180 size（¥3,580/件），重量也要注意。</span><br>
+              <span style="font-size:12px; color:var(--text-soft);">📏 <b>26 寸行李箱三邊合計約 145–155cm，落在 160 size</b>，超商（7-11／全家）上限剛好是 160，可以收；若塞太滿超過 160 就要去營業所。<br>
+              🏢 <b>ヤマト運輸 大町營業所</b>（信濃大町駅步行 3–8 分）08:00–20:00 全年無休，大尺寸一定收，最保險。<br>
+              ❌ 立山官方行李回送（¥4,000/件）只送到電鐵富山站，<b>不到金澤</b>，不適用。</span></div>
+            </div>
+            <div style="margin-top:12px; padding-top:10px; border-top:1px dashed var(--line);">
+              <b style="font-size:13px; color:var(--ink);">📋 送り状（寄件單）要填的資料 — 現場照抄</b>
+              <table class="sched" style="margin-top:6px;">
+                <tr><td style="width:110px;">寄件人姓名</td><td><b>RouHua Hsu（10/9~10/10）</b><br><span style="font-size:11.5px; color:var(--text-soft);">括號加註住宿期間，飯店好對照</span></td></tr>
+                <tr><td>寄件人電話</td><td><b>+886928863408</b></td></tr>
+                <tr><td>收件人</td><td>ホテル金沢（Hotel Kanazawa）<br><span style="font-size:11.5px; color:var(--pine-2);">✅ 飯店已確認：這是正確的行李寄送地址（Neon Hotel 館內無前台）</span></td></tr>
+                <tr><td>收件人地址</td><td><b>石川県金沢市堀川新町1-1</b><br><span style="font-size:11.5px; color:var(--text-soft);">JR金澤站步行 1 分，Neon Hotel 的 check-in 櫃檯</span></td></tr>
+                <tr><td>收件人電話</td><td><b>076-223-1005</b><br><span style="font-size:11.5px; color:var(--text-soft);">Hotel Kanazawa 代表電話</span></td></tr>
+                <tr><td>品名</td><td><b>スーツケース 衣類等</b>（行李箱、衣物等）</td></tr>
+                <tr><td>備註欄</td><td><b>Neon Hotel 宿泊 / RouHua Hsu</b><br><span style="font-size:11.5px; color:var(--text-soft);">✅ 飯店已確認這樣寫沒問題</span></td></tr>
+                <tr><td>指定到達日</td><td><b>10/9（五）</b><br><span style="font-size:11.5px; color:var(--text-soft);">10/7 寄出，一定要指定日期，否則 10/8 就會送到</span></td></tr>
+                <tr><td>付款方式</td><td style="color:var(--maple-2); font-weight:700;">⚠ 一定選「元払い」寄件時付款<br><span style="font-size:11.5px; font-weight:400;">網友實測：選貨到付款飯店會拒收！可付現金或 PayPay</span></td></tr>
+              </table>
+              <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">💡 這張表截圖存進手機相簿，現場直接照抄。<b style="color:var(--pine-2);">✅ 已向 Neon Hotel 確認：地址正確、備註寫法 OK、行李比 check-in 時間早到也沒問題。</b><br>
+              📌 <b>實務提醒（網友實測）：</b>地址寫英文也可以｜3 件行李理論上填 3 張單，店員通常讓你寫一張再幫你抄｜<b>去營業所自送每件折 ¥100</b>｜單據複本有編號可上網查運送狀態｜英文＋簡單日文溝通沒問題</div>
+            </div>
+            </div>
+          </div>
+          <details class="more"><summary>展開今日動線＋轉乘班次</summary><div class="inner">
+            <table class="sched">
+              <tr><td>07:30</td><td>湯元館吃早餐（07:30–09:00）</td></tr>
+              <tr><td>07:50</td><td>check-out，行李確認完畢，步行到巴士站</td></tr>
+              <tr><td>08:55</td><td>搭巴士往松本 ✈</td></tr>
+            </table>
+            <div class="bus-box" style="border-color:var(--pine);">
+              <div class="bus-title mono">🎫 平湯溫泉 → 松本（<span style="color:var(--pine-2);">已購票・車次 26502　1號車</span>）</div>
+              <table class="bus-table">
+                <tr><th>平湯溫泉</th><th>松本巴士總站</th><th>座位</th></tr>
+                <tr><td class="rec">08:55</td><td class="rec">10:23</td><td class="rec">05B / 05C / 05D</td></tr>
+              </table>
+              <div class="bus-note">訂票人 Liu JHIHYIN・大人 ×3｜QR Code 在 Emily 的 Gmail，出發前截圖備份。建議 <b>08:40 前到巴士站</b>等候。</div>
+            </div>
+            <table class="sched">
+              <tr><td>10:23</td><td>抵達松本！</td></tr>
+            </table>
+            <div class="bus-box">
+              <div class="bus-title mono">🚄 JR 大糸線 松本 → 信濃大町（¥715）<span class="suica ok">✅ 西瓜卡可刷</span></div>
+              <table class="bus-table">
+                <tr><th>松本發</th><th>信濃大町抵</th><th>松本空檔</th><th>備註</th></tr>
+                <tr><td>11:19</td><td>12:21</td><td>56分</td><td>趕一點：吃碗蕎麥麵就走</td></tr>
+                <tr><td class="rec">12:09</td><td class="rec">13:04</td><td class="rec">1h46m</td><td class="rec">✈ 推薦！蕎麥麵＋松本城外圍拍照</td></tr>
+                <tr><td>13:11</td><td>14:07</td><td>2h48m</td><td>超充裕，可進松本城參觀</td></tr>
+              </table>
+            </div>
+            <table class="sched">
+              <tr><td>13:04</td><td>抵達信濃大町（搭 12:09 推薦班）</td></tr>
+              <tr><td>13:15</td><td>check-in Shinano Swee（或先寄放行李）</td></tr>
+              <tr><td>13:30</td><td>check-in 後先整理行李：把今晚＋D6＋天狗平過夜要用的東西移進背包（見下方清單）</td></tr>
+              <tr><td>14:00–17:00</td><td>自由時間：信濃大町市區散步 / 搭巴士去大町溫泉泡湯（約 15 分，¥430）/ 直接休息蓄電</td></tr>
+              <tr><td>18:00前</td><td>📦 <b>大行李拖去黑貓大町營業所寄出</b>（站旁步行 3–8 分，營業到 20:00），指定 10/9 到達、元払い付款</td></tr>
+              <tr><td>晚上</td><td>只剩背包，早點睡，明天 <b>07:05</b> 搭巴士出發大縱走！</td></tr>
+            </table>
+            <details class="more" style="margin-top:14px; border:1px dashed var(--line); border-radius:6px; padding:0 12px;">
+              <summary style="padding:12px 0;">🎒 展開：背包清單（寄大箱前先整理好）</summary>
+              <div class="inner">
+                <div style="font-size:13px; color:var(--text-soft); margin-bottom:10px;">大行李今天傍晚就寄走了，今晚＋D6＋天狗平那晚都只靠這個背包！寄箱子前確認以下都拿出來：</div>
+                <div class="cl-item"><input type="checkbox" id="pk1"><label for="pk1">🧥 防風防水外套（室堂 0–5°C 必備）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk_headlamp"><label for="pk_headlamp">🔦 頭燈（清晨看雲海、山莊夜間走動必備）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk2"><label for="pk2">🧤 毛帽＋手套</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk3"><label for="pk3">🧣 薄毛衣 / 刷毛中層</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk4"><label for="pk4">🍵 保溫瓶（山上補充熱飲）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk5"><label for="pk5">🌞 防曬乳 SPF50（高海拔紫外線強）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk6"><label for="pk6">💊 頭痛藥（天狗平 2,300m，高山症預防）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk7"><label for="pk7">🎟 立山黑部車票 QR Code（截圖存好）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk8"><label for="pk8">🏨 天狗平山莊訂房確認信</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk9"><label for="pk9">💴 現金至少 ¥5,000（山上部分設施只收現金）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk10"><label for="pk10">👕 換洗衣物<b>兩套</b>（今晚信濃大町＋天狗平過夜，一直穿到 D7 晚上拿回大箱）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk11"><label for="pk11">🧴 盥洗用品小包＋充電器（大箱寄走後就拿不到了）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk_towel"><label for="pk_towel">🛁 <b>浴巾</b>（山莊只提供洗臉毛巾和牙刷，浴巾要自備）</label></div>
+                <div class="cl-item"><input type="checkbox" id="pk12"><label for="pk12">🌧 輕量雨衣（山區天氣多變）</label></div>
+                <div id="custom-pk" class="custom-list"></div>
+                <div class="add-item-row"><input type="text" class="add-input" placeholder="新增輕裝物品…" data-target="custom-pk" data-prefix="pk"><button class="add-btn" onclick="addCustomItem(this)">＋</button></div>
+              </div>
+            </details>
+            <div class="bus-note" style="margin-top:12px;">💡 明早從信濃大町站前搭路線巴士往扇澤（約 40 分，¥1,500–2,000）。網友實測：8:30 抵扇澤時排隊處已被團客擠爆，<b>建議搭 07:30 前後班次早點到！</b></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D6 -->
+    <div class="day alpine">
+      <div class="marker"><span class="d mono">D6</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 17l6-6 3 3 5-7 6 8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/8 (四) 黑部立山大縱走</h2>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <span class="stay-tag">宿 · 天狗平山莊 <b>三人房</b> <a href="https://www.booking.com/Share-Mu65aW1" target="_blank">訂房</a></span>
+            <span class="confirm-tag">已確定</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row"><div class="label">住宿</div><div class="val">✅ <b>已改訂三人房 TWD 13,521</b>（原本雙床房兩間 18,242，省下 4,721），雙床房已取消。一泊二食、含稅。<br><span style="font-size:12.5px; color:var(--text-soft);">晚餐 17:30、早餐 06:30 於餐廳集合｜浴室廁所共用，浴室開放 15:00–21:00｜備品有洗臉毛巾、牙刷，<b>沒有浴巾</b>要自備</span></div></div>
+          <div class="row"><div class="label">行李</div><div class="val">大行李<b>昨天（10/7）傍晚已用黑貓寄出</b>，指定 10/9 送到金澤。今天完全輕裝，<b>07:05</b> 直接出門搭巴士！</div></div>
+          <div class="row"><div class="label">路線</div><div class="val">信濃大町／扇澤（海拔 1,433m）→ 室堂（2,450m）→ 天狗平山莊（2,300m），單向縱走，6 種交通工具接力</div></div>
+          <div class="row"><div class="label">票券</div><div class="val">
+            <span style="color:var(--pine-2); font-weight:700;">✅ 已購：早鳥優惠網票 L26589972</span>｜【單程】扇澤 ⇒ 電鐵富山｜<b>扇澤 09:00 發</b>｜2 名（Lily 另持獨立一張）<br>
+            加購「信濃大町 → 扇澤」巴士成人單程 ×2。票券有效期 5 天，D6 進山、D7 下山沒問題。
+          </div></div>
+          <div class="row"><div class="label">取票</div><div class="val" style="font-size:13.5px;">
+            掃 QR Code 在扇澤站自助售票機換票。<b style="color:var(--maple-2);">旺季須發車前 30 分抵達售票機、提前 15 分完成換票 → 08:30 前要到扇澤</b>（搭 <b>07:05</b> 信濃大町出發 → 07:45 抵，時間充裕；08:00 那班 08:40 才到會超過）。QR 在 Emily 手機，出發前記得截圖離線備份。
+          </div></div>
+          <div class="relay">
+            <div class="rl-title mono">D6 交通接力圖解（依 2026 官方時刻表，10/8 平日班次）</div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="8" width="18" height="9" rx="2"/><circle cx="7.5" cy="19" r="1.6" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19" r="1.6" fill="currentColor" stroke="none"/><path d="M3 12h18"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">信濃大町站前 → 扇澤</div><div class="rl-time">🚌 路線巴士 <b>07:05 發 → 07:45 抵</b> ｜ <span style="color:var(--pine-2);">✅ 已隨立山票加購 ×2</span></div><div class="rl-note">旺季規定發車前 30 分到售票機（08:30 前），07:45 抵達很從容，還能在扇澤吃早餐。<br>
+⚠ 信濃大町站沒有取票機：上車時<b>打開訂票詳細頁面（手機或紙本）給司機看</b>，到扇澤再用取票機一起出票。<br>
+⚠ <b>Lily 那張若沒加購巴士</b>，在站前「きっぷうりば」買（¥2,000，首班前 10 分開窗）或上車付現。<br>
+<span style="color:var(--text-soft);">出發前在站牌確認 07:05 平日有開；錯過的話 08:00 → 08:40 是最後底線。</span></div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="8" width="16" height="9" rx="2"/><path d="M12 2v4M9 2l1.5 2M15 2l-1.5 2" stroke-linecap="round"/><circle cx="8" cy="19" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">扇澤 → 黑部水庫</div><div class="rl-time">⚡ 關電隧道電氣巴士 <b>09:00 發 → 09:16 抵</b>（購票指定此班）<span class="suica ng">❌ 專用票券</span></div><div class="rl-note">全線唯一需指定時段！排隊人多時會加開第二台車</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 19l7-14 7 14" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">黑部水庫 → 黑部湖站</div><div class="rl-time">🚶 步行過水庫大壩＋展望台 09:16–10:00（44分）</div><div class="rl-note">觀光放水（10/15 前每天）＋展望台看彩虹。⚠ 展望台要爬一段階梯，蓋紀念章的章藏在車站內別錯過！</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 20V10l8-6 8 6v10" stroke-linejoin="round"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">黑部湖 → 黑部平</div><div class="rl-time">🚋 黑部登山纜車 <b>10:00 發 → 10:05 抵</b></div><div class="rl-note">全程隧道內爬升，垂直感十足</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 14h18M7 14v6M17 14v6" stroke-linecap="round"/><rect x="9" y="8" width="6" height="6" rx="1"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">黑部平 → 大觀峰</div><div class="rl-time">🚡 立山架空索道 <b>10:25 發 → 10:32 抵</b>（黑部平展望台先晃 20 分）</div><div class="rl-note">全日本最長無支柱纜車！後立山連峰全景</div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="8" width="16" height="9" rx="2"/><path d="M12 2v4M9 2l1.5 2M15 2l-1.5 2" stroke-linecap="round"/></svg></div>
+              <div class="rl-body"><div class="rl-mode">大觀峰 → 室堂</div><div class="rl-time">⚡ 立山隧道無軌電車 <b>10:40 發 → 10:50 抵</b></div></div>
+            </div>
+            <div class="rl-item">
+              <div class="rl-icon peak"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l7 18H5z" stroke-linejoin="round"/></svg></div>
+              <div class="rl-body">
+                <div class="rl-mode">🎯 室堂（海拔 2,450m 最高點）10:50–15:00</div>
+                <div class="rl-time">停留約 4 小時，超充裕！</div>
+                <div class="rl-note">午餐（立山飯店 cafe rindo 咖哩是網友推薦）後走<b>雷鳥澤短線</b>（見下方時間軸），之後在室堂巴士站告知站務員「天狗平」，搭往富山方向高原巴士 5 分即達天狗平山莊，check-in 後看夕陽雲海。</div>
+                <table class="sched" style="margin-top:8px;">
+                  <tr><td>10:50</td><td>抵室堂，先吃午餐</td></tr>
+                  <tr><td>11:45</td><td>出發 → <b>御庫裏池</b>（約 15 分）</td></tr>
+                  <tr><td>12:00</td><td>→ みどりが池 → <b>雷鳥莊</b>（約 25 分）</td></tr>
+                  <tr><td>12:30</td><td>雷鳥莊往下的<b>石板步道</b>：俯瞰雷鳥澤露營場＋整片紅葉，網友 9/30 拍到最繽紛的就是這裡 📸</td></tr>
+                  <tr><td>12:45</td><td>想走可以繼續下到<b>雷鳥澤露營場</b>（約 15 分）</td></tr>
+                  <tr><td>13:00–14:00</td><td>拍照休息，<b>往回爬坡上來</b>（回程比去程累，約 1 小時）</td></tr>
+                  <tr><td>15:00 前</td><td>回室堂搭巴士到天狗平 check-in（15:00–17:00）</td></tr>
+                </table>
+                <div class="rl-note" style="margin-top:6px;">全程約 2–2.5 小時，大多是石板路。不想爬回來的話，<b>走到雷鳥莊下方的石板步道就拍得到</b>，不一定要下到營地。⚠ 沿途有往<b>地獄谷</b>的岔路，常因火山氣體封閉，不要走。</div>
+              </div>
+            </div>
+          </div>
+          <div class="bus-note" style="margin:8px 0 4px;">📋 以上為 2026 官方時刻表（4/15–11/3 版）平日串接：信濃大町 <b>7:05</b> → 扇沢 <b>7:45</b> → 電巴 9:00 → 水庫 9:16 → 纜車 10:00 → 索道 10:25 → 電車 10:40 → 室堂 10:50。若錯過任一班，每 20–30 分都有下一班不用慌。<a href="https://www.alpen-route.com/timetable/" target="_blank">官方時刻表</a>現場再確認。</div>
+          <div class="row"><div class="label">亮點</div><div class="val">傍晚雲海夕陽＋無光害星空，隔天清晨獨享御庫裏池倒影。<span class="hl">體感接近 0°C，毛帽手套防風外套必備！</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CH4 -->
+  <div id="ch4"></div>
+  <div class="chapter"><span class="num">CH.4</span><span class="ln"></span><span class="lbl">金澤・富山尾聲</span></div>
+  <div class="timeline">
+    <div class="rail"></div>
+
+    <!-- D7 -->
+    <div class="day city">
+      <div class="marker"><span class="d mono">D7</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c99a3e" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/9 (五) 天狗平包場 → 直奔金澤</h2><span class="stay-tag">宿 · 金澤 Neon Hotel <a href="https://www.booking.com/Share-RsQpnOL" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">亮點</div><div class="val">山莊免費接駁 07:15 直送室堂，清晨包場御庫裏池倒影，下山後可加碼稱名滝，傍晚新幹線直達金澤逛東茶屋街夜景</div></div>
+          <div class="row"><div class="label">行李</div><div class="val">黑貓行李已直送金澤，check-in 時就在飯店，<b>富山不用停留領行李，直接搭新幹線去金澤</b>。</div></div>
+          <div class="row"><div class="label">坐位</div><div class="val">🪟 <b>下山高原巴士坐右邊！</b>網友實測：左側視野被樹擋住，右側才看得到腳下雲海（天氣好時雲海超美）</div></div>
+
+          <div class="todo-box">
+            <div class="todo-title">📌 早餐時（06:30）在餐廳要辦三件事</div>
+            <div class="todo-body">
+              ① <b>申請免費接駁車</b>（天狗平 → 室堂，07:15 玄關集合）<br>
+              ② <b>預約下山高原巴士</b>（往室堂或美女平，餐廳受理）<br>
+              ③ 需要的話<b>訂便當</b>（前一晚晚餐時點、早餐時領取，另計費）— 下山路上沒什麼吃的，想衝稱名滝的話很實用
+            </div>
+          </div>
+          <details class="more" open><summary>展開：兩個下山版本＋稱名滝時刻表</summary><div class="inner">
+            <b>🏔 版本 A：一之越晨登＋悠閒下山（推薦）</b>
+            <table class="sched">
+              <tr><td class="rec">06:30</td><td>餐廳早餐（同時辦上方三件事）</td></tr>
+              <tr><td>07:00</td><td>退房、整理背包</td></tr>
+              <tr><td class="rec">07:15</td><td><b>玄關集合，搭山莊免費接駁上室堂</b>（5 分鐘，免費）</td></tr>
+              <tr><td>07:20</td><td>室堂出發往<b>一之越</b>（上坡約 1 小時，爬雄山的半路，比雄山後段好走很多）</td></tr>
+              <tr><td>08:30</td><td><b>一之越（2,700m）</b>：後立山連峰、槍岳方向展望，早上天氣最穩</td></tr>
+              <tr><td>09:40</td><td>下山回到室堂（約 50 分）。時間有剩就繞御庫裏池看晨間倒影</td></tr>
+              <tr><td>~10:00</td><td>室堂搭下行高原巴士（約 50 分到美女平）🪟 坐右邊看雲海</td></tr>
+              <tr><td>~10:55</td><td>美女平轉立山纜車 7 分 → 立山車站</td></tr>
+              <tr><td>~11:15</td><td>抵立山車站，站前吃午餐</td></tr>
+              <tr><td>~12:30</td><td>富山地方鐵道往電鐵富山（約 65–75 分）<span class="suica ok">✅ 西瓜卡可刷</span></td></tr>
+              <tr><td>~13:45</td><td>電鐵富山到！行李已直送金澤，不用領，直接轉新幹線</td></tr>
+              <tr><td>~14:30</td><td>北陸新幹線 23 分抵金澤 <span class="suica ok">✅ 西瓜卡可刷</span></td></tr>
+              <tr><td>~15:15</td><td>金澤 check-in → 東茶屋街＋主計町夜散步（店鋪約 17:00 關，但<b>晚上打燈的木造老街更有味道</b>，石板路＋暗巷燈籠是最佳夜散步路線）</td></tr>
+              <tr><td>晚餐</td><td>能登半島海鮮、金澤咖哩或黑百合關東煮</td></tr>
+            </table>
+            <b>💧 版本 B：加碼稱名滝（日本落差第一 350m 瀑布）</b>
+            <table class="sched">
+              <tr><td class="rec">06:30</td><td>餐廳早餐（訂便當、預約下山巴士）</td></tr>
+              <tr><td>07:15</td><td><b>免費接駁上室堂</b>，先看 1 小時御庫裏池晨光</td></tr>
+              <tr><td>~08:30</td><td>室堂搭下行高原巴士 🪟 坐右邊看雲海</td></tr>
+              <tr><td>~09:30</td><td>抵立山車站，轉搭 10:30 稱名滝巴士</td></tr>
+              <tr><td>10:30–10:45</td><td>稱名滝探勝巴士（15 分，¥500）</td></tr>
+              <tr><td>10:45–11:15</td><td>瀑布巴士站步行 30 分（1.3km 緩上坡）到觀瀑橋</td></tr>
+              <tr><td>11:15–12:00</td><td>350m 四段瀑布＋紅葉，V字峽谷超壯觀</td></tr>
+              <tr><td>12:00–12:40</td><td>步行回巴士站</td></tr>
+              <tr><td>13:10</td><td>搭回程巴士 → 13:25 立山車站，簡單午餐</td></tr>
+              <tr><td>~14:00</td><td>富山地方鐵道 → 電鐵富山 ~15:15 <span class="suica ok">✅ 西瓜卡可刷</span></td></tr>
+              <tr><td>~16:00</td><td>新幹線 → 金澤 ~16:30，check-in 後直奔東茶屋街傍晚點燈</td></tr>
+            </table>
+            <div class="bus-box">
+              <div class="bus-title mono">💧 稱名滝探勝巴士時刻表（5/11–11/10 運行）｜單程 ¥500</div>
+              <table class="bus-table">
+                <tr><th>立山駅前 發</th><th>稱名滝 抵</th><th></th><th>稱名滝 發</th><th>立山駅前 抵</th></tr>
+                <tr><td>08:30</td><td>08:45</td><td></td><td>09:00</td><td>09:15</td></tr>
+                <tr><td>09:30</td><td>09:45</td><td></td><td>10:00</td><td>10:15</td></tr>
+                <tr><td class="rec">10:30</td><td class="rec">10:45</td><td></td><td>11:00</td><td>11:15</td></tr>
+                <tr><td>12:40</td><td>12:55</td><td></td><td class="rec">13:10</td><td class="rec">13:25</td></tr>
+                <tr><td>14:10</td><td>14:25</td><td></td><td>14:40</td><td>14:55</td></tr>
+                <tr><td>15:10</td><td>15:25</td><td></td><td>15:30</td><td>15:45</td></tr>
+              </table>
+              <div class="bus-note">⚠ 11:00–12:40 之間沒有班次（中午空窗），安排時注意！巴士站→觀瀑橋單程步行 30 分。</div>
+            </div>
+            <div class="bus-note" style="margin-top:8px;">💭 <b>稱名滝值得去嗎？</b>日本落差第一（350m 四段式），10 月中水量比雪融期少但配上紅葉 V 字峽谷依然震撼，多花約 2.5–3 小時＋來回 1 小時步行。<b>建議：</b>因為有 07:15 免費接駁，版本 B 也能先看一小時室堂晨光再下山，兩者差別是「一之越晨登＋15:15 到金澤」還是「室堂 1 小時＋稱名滝、16:30 到金澤」。當天看天氣和腿力現場決定就好！</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D8 -->
+    <div class="day city">
+      <div class="marker"><span class="d mono">D8</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c99a3e" stroke-width="1.8"><path d="M4 20c2-8 6-14 8-14s6 6 8 14" stroke-linecap="round"/><path d="M4 20h16"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/10 (六) 金澤白天精華 → 晚上回高岡</h2><span class="stay-tag">宿 · 角久日式旅館（高岡）<a href="https://www.booking.com/Share-wI4Fwj" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">金澤市內公車全日遊 <span class="suica ok">✅ 西瓜卡可刷</span> → 傍晚北陸新幹線つるぎ <b>13 分</b>回新高岡 <span class="suica ok">✅ 西瓜卡可刷</span>（比富山還快！）</div></div>
+          <div class="row"><div class="label">亮點</div><div class="val"><span class="hl">【三連休首日 人多！】</span>早晨近江町市場海鮮丼早午餐，白天兼六園、金澤城。</div></div>
+          <details class="more"><summary>展開：回程順路加碼富山美術館？</summary><div class="inner">
+            <b>🎨 富山玻璃美術館（隈研吾設計 TOYAMAキラリ）</b>
+            <table class="sched">
+              <tr><td>傍晚</td><td>金澤搭新幹線，<b>不在新高岡下車</b>，多坐一站到「富山站」（多 8 分鐘）</td></tr>
+              <tr><td>+15分</td><td>富山站步行到美術館（約 15 分），<b>營業到 17:30</b></td></tr>
+              <tr><td>+45分</td><td>參觀約 40–50 分（免費區域就很美，付費展 ¥200）</td></tr>
+              <tr><td>+20分</td><td>あいの風とやま鉄道 富山→高岡（約 20 分）<span class="suica ok">✅ 西瓜卡可刷</span></td></tr>
+              <tr><td>~18:30</td><td>抵高岡，步行回角久旅館，晚餐</td></tr>
+            </table>
+            <div class="bus-note">⚠ 要去的話，金澤最晚 <b>15:30 前出發</b>才來得及在 17:30 閉館前入場！三連休兼六園人很多，如果下午三點前逛完就順路去。不去的話直接新高岡下車回旅館，高岡市區晚上散步也很舒服。</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D9 -->
+    <div class="day toyama">
+      <div class="marker"><span class="d mono">D9</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b1401c" stroke-width="1.8"><path d="M4 16l1.5-5.5A2 2 0 0 1 7.4 9h9.2a2 2 0 0 1 1.9 1.5L20 16" stroke-linejoin="round"/><rect x="3" y="16" width="18" height="4" rx="1.2"/><circle cx="7.5" cy="20.2" r="1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="20.2" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/11 (日) 氷見線鐵道日・雨晴海岸</h2><span class="stay-tag">宿 · 角久日式旅館（高岡連住）<a href="https://www.booking.com/Share-wI4Fwj" target="_blank">訂房</a></span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">今日重點</div><div class="val">搭觀光列車「<b>べるもんた</b>」沿富山灣看海、雨晴海岸立山浮海面、氷見番屋街海鮮午餐。<b>不租車，全程鐵道！</b></div></div>
+          <div class="row"><div class="label">坐位</div><div class="val">🪟 官方資訊：べるもんた 的カウンター席固定面向<b>城端方向的左側</b>（也就是面山那側車窗最大），是設計上專門看立山連峰、富山灣的景觀席。普通車沒有固定側，兩側都能看到，看哪側人少就坐哪側。</div></div>
+
+          <div class="ticket-alert" style="margin:14px 0 4px; padding:18px 20px 16px; font-size:14px; border-color:var(--pine);">
+            <div style="font-size:13px; color:var(--pine-2); font-weight:700; margin-bottom:6px;">✅ べるもんた4號 已訂位！</div>
+            10/11（日）氷見 15:15 → 高岡 15:48，1號車，e5489 訂票，新高岡取票。<br>
+            🪑 <b>座位：3B・3C（面對面box席）＋ 10B（單人窗邊カウンター席）</b><br>
+            <span style="font-size:12.5px; color:var(--text-soft);">3B/3C 是兩人面對面的桌席，10B 是獨立面窗座位、正對富山灣景觀最好。三人可以輪流坐 10B，或決定好由誰坐。</span><br>
+            💰 乘車券＋指定席券合計 <b>¥860/人</b><br>
+            🍣 車上「ぷち富山湾鮨セット」可另外預約，<b>乘車 3 天前截止</b>，需先有座位號碼 → <a href="https://berumonta.jp/" target="_blank">預約網站</a>
+          </div>
+
+          <details class="more" open><summary>展開：べるもんた 時刻表＋一日動線</summary><div class="inner">
+            <div class="bus-box">
+              <div class="bus-title mono">🚃 べるもんた4號（已訂）</div>
+              <table class="bus-table">
+                <tr><th>班次</th><th>氷見</th><th>雨晴</th><th>高岡</th></tr>
+                <tr><td class="rec">4號 ↑</td><td class="rec">15:15</td><td>15:23</td><td class="rec">15:48</td></tr>
+              </table>
+              <div class="bus-note">✅ <b>已訂座位 3B・3C・10B</b>。去程改搭普通氷見線（見下方時間軸），可以在雨晴自由上下車，更彈性。</div>
+            </div>
+            <table class="sched">
+              <tr><td>08:43</td><td>高岡搭普通氷見線出發 <span class="suica ok">✅ 西瓜卡可刷</span>（坐右邊）</td></tr>
+              <tr><td>09:04</td><td>雨晴駅下車，步行 5 分到海岸：女岩＋立山連峰浮在海上的絕景</td></tr>
+              <tr><td>09:04–10:40</td><td>雨晴海岸散步、道之驛雨晴咖啡休息，等べるもんた</td></tr>
+              <tr><td>約10:40</td><td>雨晴駅搭普通氷見線繼續往氷見 <span class="suica ok">✅ 西瓜卡可刷</span></td></tr>
+              <tr><td>約11:00</td><td>抵達氷見</td></tr>
+              <tr><td>11:00–15:00</td><td>氷見番屋街：海鮮丼、寒鰤（10 月入季）、氷見烏龍麵、當地地酒（不開車可以喝！）、足湯看海</td></tr>
+              <tr><td class="rec">15:15</td><td><b>氷見搭べるもんた4號回程</b> — 座位 3B・3C・10B，10B 面窗看海景最好</td></tr>
+              <tr><td>15:48</td><td>抵達高岡，步行逛高岡大佛、哆啦A夢散步道</td></tr>
+              <tr><td>傍晚</td><td>回角久旅館，高岡老街散步、最後一晚晚餐</td></tr>
+            </table>
+            <div class="bus-note">💡 普通氷見線班次多、班距約 1 小時內，海景跟べるもんた一樣。回程已訂 <b>べるもんた4號 氷見 15:15</b>，早上去程班次到時候現場查即可，不用先卡死。</div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- D10 -->
+    <div class="day home">
+      <div class="marker"><span class="d mono">D10</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 13l7-1 4-6 2 1-2.5 5.5 6-.5 1.5 2-6.5 2.5.5 5-2 1-2-4.5-4.5 3-1.5-1.5 3-3z" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>10/12 (一) 富山 → 台北</h2><span class="stay-tag">回台灣 🎉</span></div>
+        <div class="card-body">
+          <div class="row"><div class="label">交通</div><div class="val">高岡 →（あいの風とやま鉄道 約 20 分）→ 富山站 <span class="suica ok">✅ 西瓜卡可刷</span> →（機場巴士 24 分，¥420）→ 富山機場 <span class="suica cash">💳 可刷信用卡感應</span>｜華航 CI171（12:15 富山 → 14:40 桃園 T2）行李 2PC</div></div>
+          <div class="row"><div class="label">⚠ 注意</div><div class="val"><b style="color:var(--maple-2);">10/12 是「體育之日」祝日，適用休日時刻表</b>，機場巴士 <b>8:10 之後直接跳到 10:20</b>，中間空兩小時！機場巴士為<b>著席定員制，滿席就上不了</b>，三連休最後一天要留意。</div></div>
+          <details class="more" open><summary>展開：兩個出發時間方案＋巴士時刻表</summary><div class="inner">
+            <div class="bus-box">
+              <div class="bus-title mono">🚌 富山駅前 → 富山空港（休日時刻表・¥420）</div>
+              <table class="bus-table">
+                <tr><th>富山駅前 6番</th><th>富山空港前</th><th>種別</th></tr>
+                <tr><td>7:15</td><td>7:37</td><td>36系統</td></tr>
+                <tr><td class="rec">8:10</td><td class="rec">8:35</td><td>各停・保險</td></tr>
+                <tr><td class="rec">10:20</td><td class="rec">10:44</td><td>直行・剛好</td></tr>
+                <tr><td>10:25</td><td>10:49</td><td>各停</td></tr>
+                <tr><td>11:20</td><td>11:41</td><td>❌ 太晚</td></tr>
+              </table>
+              <div class="bus-note">乘車處：富山駅前 6 番のりば。下車時用信用卡感應付款即可（Visa / Master / JCB / Amex 皆可），不必準備現金。</div>
+            </div>
+            <b>🅰 保險版（推薦，三連休人多）</b>
+            <table class="sched">
+              <tr><td>07:00</td><td>角久旅館退房，步行到高岡站</td></tr>
+              <tr><td>07:30</td><td>高岡搭あいの風とやま鉄道 → 富山 07:50</td></tr>
+              <tr><td>08:10</td><td>富山駅前 6番 搭機場巴士</td></tr>
+              <tr><td>08:35</td><td>抵達富山機場，早餐＋免稅店慢慢逛</td></tr>
+              <tr><td>10:15</td><td>國際線報到櫃檯開放（起飛前 2 小時）</td></tr>
+            </table>
+            <b>🅱 悠閒版（可睡晚一點，但要賭巴士有位）</b>
+            <table class="sched">
+              <tr><td>09:00</td><td>旅館早餐後退房</td></tr>
+              <tr><td>09:40</td><td>高岡搭あいの風とやま鉄道 → 富山 10:00</td></tr>
+              <tr><td>10:20</td><td>富山駅前搭<b>直行</b>機場巴士</td></tr>
+              <tr><td>10:44</td><td>抵達富山機場，距起飛 1 小時 31 分</td></tr>
+            </table>
+            <div class="bus-note">⚠ 🅱 若 10:20 那班滿席，下一班 10:25 各停 10:49 到；再下一班 11:20 就趕不上了。<b>行李多、三連休、想安心 → 選 🅰</b>。也可考慮高岡直接叫計程車到機場（約 40 分）當備案。</div>
+          </div></details>
+          <div class="row"><div class="label">早上</div><div class="val">高岡角久旅館早餐後出發，或在富山站採買白蝦仙貝、鱒壽司帶回台灣（MAROOT / CiC 在富山站內）</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  名古屋 → 高山 → 上高地 → 大町溫泉 → 立山黑部 → 金澤 → 富山 ／ 十天九夜<br>
+  <a href="https://www.nouhibus.co.jp/ch_h/routebus/" target="_blank" rel="noopener">濃飛巴士</a> ・
+  <a href="https://www.alpen-route.com/tw/" target="_blank" rel="noopener">立山黑部官網</a> ・
+  <a href="https://www.alpen-route.com/information/forwarding.html" target="_blank" rel="noopener">行李回送服務</a> ・
+  <a href="https://www.alpen-route.com/timetable/" target="_blank" rel="noopener">立山全線時刻表</a>
+</footer>
+
+<script>
+  // 星星
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<50;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*40+'%';
+    s.style.animationDelay=(Math.random()*3.4)+'s';
+    s.style.width=s.style.height=(Math.random()*1.6+1)+'px';
+    starsEl.appendChild(s);
+  }
+  // ── 勾選狀態記憶 ──
+  function bindCheckbox(cb){
+    const key='cb_'+cb.id;
+    if(localStorage.getItem(key)==='1'){ cb.checked=true; }
+    cb.addEventListener('change',()=>{
+      localStorage.setItem(key, cb.checked?'1':'0');
+      const lbl=cb.parentElement.querySelector('label');
+      if(lbl) lbl.style.textDecoration=cb.checked?'line-through':'';
+    });
+    const lbl=cb.parentElement.querySelector('label');
+    if(lbl && cb.checked) lbl.style.textDecoration='line-through';
+  }
+  document.querySelectorAll('input[type=checkbox]').forEach(bindCheckbox);
+
+  // ── 自訂新增項目 ──
+  // 讀取已儲存的自訂項目並渲染
+  function loadCustomItems(){
+    document.querySelectorAll('.custom-list').forEach(list=>{
+      const id=list.id;
+      const saved=JSON.parse(localStorage.getItem('custom_'+id)||'[]');
+      saved.forEach(item=>renderCustomItem(list, item.text, item.id, item.checked));
+    });
+  }
+
+  function saveCustomItems(listId){
+    const list=document.getElementById(listId);
+    const items=[];
+    list.querySelectorAll('.cl-item, .pack-item').forEach(row=>{
+      const cb=row.querySelector('input[type=checkbox]');
+      const lbl=row.querySelector('label');
+      if(cb&&lbl) items.push({id:cb.id, text:lbl.textContent.replace('✕','').trim(), checked:cb.checked});
+    });
+    localStorage.setItem('custom_'+listId, JSON.stringify(items));
+  }
+
+  function renderCustomItem(list, text, cbId, checked){
+    const div=document.createElement('div');
+    div.className='cl-item';
+    const uid=cbId||('cust_'+Date.now()+'_'+Math.random().toString(36).slice(2,6));
+    div.innerHTML=`<input type="checkbox" id="${uid}" ${checked?'checked':''}><label for="${uid}">${text}</label><button class="del-btn" title="刪除" onclick="deleteCustomItem(this)">✕</button>`;
+    list.appendChild(div);
+    const cb=div.querySelector('input');
+    bindCheckbox(cb);
+    cb.addEventListener('change',()=>saveCustomItems(list.id));
+  }
+
+  function addCustomItem(btn){
+    const row=btn.parentElement;
+    const input=row.querySelector('.add-input');
+    const text=input.value.trim();
+    if(!text) return;
+    const targetId=input.dataset.target;
+    const prefix=input.dataset.prefix||'cu';
+    const list=document.getElementById(targetId);
+    const cbId=prefix+'_'+Date.now();
+    renderCustomItem(list, text, cbId, false);
+    saveCustomItems(targetId);
+    input.value='';
+    input.focus();
+  }
+
+  function deleteCustomItem(btn){
+    const row=btn.parentElement;
+    const list=row.parentElement;
+    row.remove();
+    saveCustomItems(list.id);
+  }
+
+  // Enter 鍵也能新增
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter' && e.target.classList.contains('add-input')){
+      const btn=e.target.parentElement.querySelector('.add-btn');
+      if(btn) btn.click();
+    }
+  });
+
+  loadCustomItems();
+</script>
+</body>
+</html>
